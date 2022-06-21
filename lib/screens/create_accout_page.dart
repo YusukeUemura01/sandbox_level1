@@ -39,7 +39,7 @@ class CreateAccountPage extends HookConsumerWidget {
                 ),
                 GestureDetector(
                   onTap: () async {
-                    final pickedFile = await FunctionUtils().getImageGallery();
+                    final pickedFile = await FunctionUtils().getImageGallery();//imagePickerで画像取得
                     ref.read(createAccountPageProvider.notifier).changeIconImage(File(pickedFile.path));
                   },
                   child: CircleAvatar(
@@ -87,7 +87,7 @@ class CreateAccountPage extends HookConsumerWidget {
                         passwordErrorText = "パスワードが入力されていません";
                       }
                       ref.read(createAccountPageProvider.notifier).changeErrorText(nameErrorText,emailErrorText,passwordErrorText);
-                      if(nameErrorText == null && emailErrorText == null && passwordErrorText == null){
+                      if(nameErrorText == null && emailErrorText == null && passwordErrorText == null){//TODO ここから
                         //final newAccount = await Authentication().signUp(emailController.text,passController.text);//アカウントをauthenticationに登録
                       }
                     },
