@@ -22,8 +22,8 @@ class CreateAccountPage extends StatelessWidget {
                 GestureDetector(
                   onTap: () async {
                   },
-                  child: CircleAvatar(
-                    foregroundImage: null,//image == null ? null : FileImage(image!),
+                  child: const CircleAvatar(
+                    foregroundImage: null,
                     radius: 40,
                     child: Icon(Icons.add),
                   ),
