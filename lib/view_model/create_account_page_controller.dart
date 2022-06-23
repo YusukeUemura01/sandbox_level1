@@ -61,9 +61,15 @@ class CreateAccountPageStateController extends StateNotifier<CreateAccountPageSt
       return false;
     }
   }
-  Future<void>upLoadIconImage()async{
-    if(state.iconImage == null)return;//アイコンが選択されていない時アップロードしない
-    final _imagePath = await FunctionUtils().upLoadImage(state.newAccount!.user!.uid, state.iconImage!);//iconをアップロード
-    state = state.copyWith(imagePath: _imagePath);
+  Future<bool>upLoadIconImage()async{
+    if(state.iconImage == null)return true;//アイコンが選択されていない時アップロードしない
+    try{
+      final _imagePath = await FunctionUtils().upLoadImage(state.newAccount!.user!.uid, state.iconImage!);//iconをアップロード
+      state = state.copyWith(imagePath: _imagePath);
+      return true;
+    }on FirebaseException catch(e){
+      print("iconImageアップロードエラー$e");
+      return false;
+    }
   }
 }

@@ -81,9 +81,14 @@ class CreateAccountPage extends HookConsumerWidget {
                 ElevatedButton(
                   onPressed: () async {
                     ref.read(createAccountPageProvider.notifier).initializeErrorText(); //エラーテキスト初期化
-                    final checkController = ref.read(createAccountPageProvider.notifier).checkControllerText();//空欄でないかをチェック
-                    if (!checkController) return; //空欄があったとき
+                    final checkController = ref.read(createAccountPageProvider.notifier).checkControllerText();
+                    if (!checkController) return; //エラーがあったとき
 
+                    final canAuthenticationSingUp = await ref.read(createAccountPageProvider.notifier).authenticationSignUp();//signup
+                    if(!canAuthenticationSingUp) return;//Authができなかったとき
+
+                    final canUploadIconImage = await ref.read(createAccountPageProvider.notifier).upLoadIconImage();//iconImageをアップロード
+                    if(!canUploadIconImage)return;//iconImageをアップロード出来なかった時
                   },
                   child: const Text("登録"),
                 ),
