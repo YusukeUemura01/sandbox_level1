@@ -2,15 +2,19 @@
 
 import 'dart:io';
 
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:sandbox_level1/Firebase/authentication.dart';
+import 'package:sandbox_level1/utils/function_utils.dart';
 part 'create_account_page_controller.freezed.dart';
 @freezed
 class CreateAccountPageState with _$CreateAccountPageState {
   factory CreateAccountPageState({
     File? iconImage,
+    UserCredential? newAccount,
     String? nameErrorText,
     String? emailErrorText,
     String? passErrorText,
@@ -31,14 +35,14 @@ class CreateAccountPageStateController extends StateNotifier<CreateAccountPageSt
   void initializeErrorText(){
     state = state.copyWith(nameErrorText: null,passErrorText: null,emailErrorText: null);
   }
-  bool checkControllerText(String name,String pass,String email){
-    if(name.isEmpty){
+  bool checkControllerText(){
+    if(state.nameController.text.isEmpty){
       state = state.copyWith(nameErrorText: "名前が入力されていません");
     }
-    if(pass.isEmpty){
+    if(state.passController.text.isEmpty){
       state = state.copyWith(passErrorText: "パスワードが入力されていません");
     }
-    if(email.isEmpty){
+    if(state.emailController.text.isEmpty){
       state = state.copyWith(emailErrorText: "メールアドレスが入力されていません");
     }
     if(state.nameErrorText == null && state.emailErrorText == null && state.passErrorText == null){//全ての欄が埋まっていた時
@@ -47,5 +51,19 @@ class CreateAccountPageStateController extends StateNotifier<CreateAccountPageSt
       return false;
     }
   }
-
+  Future<bool>authenticationSignUp()async {
+    final newAccount = await Authentication().signUp(state.emailController.text, state.passController.text);
+    if(newAccount is UserCredential){
+      state = state.copyWith(newAccount: newAccount);
+      return true;
+    }else{
+      print("Authエラー");
+      return false;
+    }
+  }
+  Future<void>upLoadIconImage()async{
+    if(state.iconImage == null)return;//アイコンが選択されていない時アップロードしない
+    final _imagePath = await FunctionUtils().upLoadImage(state.newAccount!.user!.uid, state.iconImage!);//iconをアップロード
+    state = state.copyWith(imagePath: _imagePath);
+  }
 }

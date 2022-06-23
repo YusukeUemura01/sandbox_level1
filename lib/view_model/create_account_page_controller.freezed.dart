@@ -17,6 +17,7 @@ final _privateConstructorUsedError = UnsupportedError(
 /// @nodoc
 mixin _$CreateAccountPageState {
   File? get iconImage => throw _privateConstructorUsedError;
+  UserCredential? get newAccount => throw _privateConstructorUsedError;
   String? get nameErrorText => throw _privateConstructorUsedError;
   String? get emailErrorText => throw _privateConstructorUsedError;
   String? get passErrorText => throw _privateConstructorUsedError;
@@ -40,6 +41,7 @@ abstract class $CreateAccountPageStateCopyWith<$Res> {
       _$CreateAccountPageStateCopyWithImpl<$Res>;
   $Res call(
       {File? iconImage,
+      UserCredential? newAccount,
       String? nameErrorText,
       String? emailErrorText,
       String? passErrorText,
@@ -61,6 +63,7 @@ class _$CreateAccountPageStateCopyWithImpl<$Res>
   @override
   $Res call({
     Object? iconImage = freezed,
+    Object? newAccount = freezed,
     Object? nameErrorText = freezed,
     Object? emailErrorText = freezed,
     Object? passErrorText = freezed,
@@ -74,6 +77,10 @@ class _$CreateAccountPageStateCopyWithImpl<$Res>
           ? _value.iconImage
           : iconImage // ignore: cast_nullable_to_non_nullable
               as File?,
+      newAccount: newAccount == freezed
+          ? _value.newAccount
+          : newAccount // ignore: cast_nullable_to_non_nullable
+              as UserCredential?,
       nameErrorText: nameErrorText == freezed
           ? _value.nameErrorText
           : nameErrorText // ignore: cast_nullable_to_non_nullable
@@ -115,6 +122,7 @@ abstract class _$$_CreateAccountPageStateCopyWith<$Res>
   @override
   $Res call(
       {File? iconImage,
+      UserCredential? newAccount,
       String? nameErrorText,
       String? emailErrorText,
       String? passErrorText,
@@ -139,6 +147,7 @@ class __$$_CreateAccountPageStateCopyWithImpl<$Res>
   @override
   $Res call({
     Object? iconImage = freezed,
+    Object? newAccount = freezed,
     Object? nameErrorText = freezed,
     Object? emailErrorText = freezed,
     Object? passErrorText = freezed,
@@ -152,6 +161,10 @@ class __$$_CreateAccountPageStateCopyWithImpl<$Res>
           ? _value.iconImage
           : iconImage // ignore: cast_nullable_to_non_nullable
               as File?,
+      newAccount: newAccount == freezed
+          ? _value.newAccount
+          : newAccount // ignore: cast_nullable_to_non_nullable
+              as UserCredential?,
       nameErrorText: nameErrorText == freezed
           ? _value.nameErrorText
           : nameErrorText // ignore: cast_nullable_to_non_nullable
@@ -191,6 +204,7 @@ class _$_CreateAccountPageState
     implements _CreateAccountPageState {
   _$_CreateAccountPageState(
       {this.iconImage,
+      this.newAccount,
       this.nameErrorText,
       this.emailErrorText,
       this.passErrorText,
@@ -202,6 +216,8 @@ class _$_CreateAccountPageState
 
   @override
   final File? iconImage;
+  @override
+  final UserCredential? newAccount;
   @override
   final String? nameErrorText;
   @override
@@ -221,7 +237,7 @@ class _$_CreateAccountPageState
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'CreateAccountPageState(iconImage: $iconImage, nameErrorText: $nameErrorText, emailErrorText: $emailErrorText, passErrorText: $passErrorText, nameController: $nameController, emailController: $emailController, passController: $passController, imagePath: $imagePath)';
+    return 'CreateAccountPageState(iconImage: $iconImage, newAccount: $newAccount, nameErrorText: $nameErrorText, emailErrorText: $emailErrorText, passErrorText: $passErrorText, nameController: $nameController, emailController: $emailController, passController: $passController, imagePath: $imagePath)';
   }
 
   @override
@@ -230,6 +246,7 @@ class _$_CreateAccountPageState
     properties
       ..add(DiagnosticsProperty('type', 'CreateAccountPageState'))
       ..add(DiagnosticsProperty('iconImage', iconImage))
+      ..add(DiagnosticsProperty('newAccount', newAccount))
       ..add(DiagnosticsProperty('nameErrorText', nameErrorText))
       ..add(DiagnosticsProperty('emailErrorText', emailErrorText))
       ..add(DiagnosticsProperty('passErrorText', passErrorText))
@@ -245,6 +262,8 @@ class _$_CreateAccountPageState
         (other.runtimeType == runtimeType &&
             other is _$_CreateAccountPageState &&
             const DeepCollectionEquality().equals(other.iconImage, iconImage) &&
+            const DeepCollectionEquality()
+                .equals(other.newAccount, newAccount) &&
             const DeepCollectionEquality()
                 .equals(other.nameErrorText, nameErrorText) &&
             const DeepCollectionEquality()
@@ -264,6 +283,7 @@ class _$_CreateAccountPageState
   int get hashCode => Object.hash(
       runtimeType,
       const DeepCollectionEquality().hash(iconImage),
+      const DeepCollectionEquality().hash(newAccount),
       const DeepCollectionEquality().hash(nameErrorText),
       const DeepCollectionEquality().hash(emailErrorText),
       const DeepCollectionEquality().hash(passErrorText),
@@ -282,6 +302,7 @@ class _$_CreateAccountPageState
 abstract class _CreateAccountPageState implements CreateAccountPageState {
   factory _CreateAccountPageState(
       {final File? iconImage,
+      final UserCredential? newAccount,
       final String? nameErrorText,
       final String? emailErrorText,
       final String? passErrorText,
@@ -292,6 +313,8 @@ abstract class _CreateAccountPageState implements CreateAccountPageState {
 
   @override
   File? get iconImage => throw _privateConstructorUsedError;
+  @override
+  UserCredential? get newAccount => throw _privateConstructorUsedError;
   @override
   String? get nameErrorText => throw _privateConstructorUsedError;
   @override
