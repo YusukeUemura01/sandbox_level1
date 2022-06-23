@@ -81,8 +81,8 @@ class CreateAccountPage extends HookConsumerWidget {
                 ElevatedButton(
                   onPressed: () async {
                     ref.read(createAccountPageProvider.notifier).initializeErrorText(); //エラーテキスト初期化
-                    final checkController = ref.read(createAccountPageProvider.notifier).checkControllerText();
-                    if (!checkController) return; //エラーがあったとき
+                    final  existEmptyField = ref.read(createAccountPageProvider.notifier).checkControllerText();
+                    if (existEmptyField) return; //空欄があったとき
 
                     final canAuthenticationSingUp = await ref.read(createAccountPageProvider.notifier).authenticationSignUp();//signup
                     if(!canAuthenticationSingUp) return;//Authができなかったとき

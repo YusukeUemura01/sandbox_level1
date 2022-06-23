@@ -46,9 +46,9 @@ class CreateAccountPageStateController extends StateNotifier<CreateAccountPageSt
       state = state.copyWith(emailErrorText: "メールアドレスが入力されていません");
     }
     if(state.nameErrorText == null && state.emailErrorText == null && state.passErrorText == null){//全ての欄が埋まっていた時
-      return true;
-    }else{
       return false;
+    }else{
+      return true;
     }
   }
   Future<bool>authenticationSignUp()async {
