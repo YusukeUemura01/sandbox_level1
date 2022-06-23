@@ -20,6 +20,13 @@ mixin _$CreateAccountPageState {
   String? get nameErrorText => throw _privateConstructorUsedError;
   String? get emailErrorText => throw _privateConstructorUsedError;
   String? get passErrorText => throw _privateConstructorUsedError;
+  TextEditingController? get nameController =>
+      throw _privateConstructorUsedError;
+  TextEditingController? get emailController =>
+      throw _privateConstructorUsedError;
+  TextEditingController? get passController =>
+      throw _privateConstructorUsedError; //デフォルトアイコン画像のURLを設定しておく
+  String get imagePath => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
   $CreateAccountPageStateCopyWith<CreateAccountPageState> get copyWith =>
@@ -35,7 +42,11 @@ abstract class $CreateAccountPageStateCopyWith<$Res> {
       {File? iconImage,
       String? nameErrorText,
       String? emailErrorText,
-      String? passErrorText});
+      String? passErrorText,
+      TextEditingController? nameController,
+      TextEditingController? emailController,
+      TextEditingController? passController,
+      String imagePath});
 }
 
 /// @nodoc
@@ -53,6 +64,10 @@ class _$CreateAccountPageStateCopyWithImpl<$Res>
     Object? nameErrorText = freezed,
     Object? emailErrorText = freezed,
     Object? passErrorText = freezed,
+    Object? nameController = freezed,
+    Object? emailController = freezed,
+    Object? passController = freezed,
+    Object? imagePath = freezed,
   }) {
     return _then(_value.copyWith(
       iconImage: iconImage == freezed
@@ -71,6 +86,22 @@ class _$CreateAccountPageStateCopyWithImpl<$Res>
           ? _value.passErrorText
           : passErrorText // ignore: cast_nullable_to_non_nullable
               as String?,
+      nameController: nameController == freezed
+          ? _value.nameController
+          : nameController // ignore: cast_nullable_to_non_nullable
+              as TextEditingController?,
+      emailController: emailController == freezed
+          ? _value.emailController
+          : emailController // ignore: cast_nullable_to_non_nullable
+              as TextEditingController?,
+      passController: passController == freezed
+          ? _value.passController
+          : passController // ignore: cast_nullable_to_non_nullable
+              as TextEditingController?,
+      imagePath: imagePath == freezed
+          ? _value.imagePath
+          : imagePath // ignore: cast_nullable_to_non_nullable
+              as String,
     ));
   }
 }
@@ -86,7 +117,11 @@ abstract class _$$_CreateAccountPageStateCopyWith<$Res>
       {File? iconImage,
       String? nameErrorText,
       String? emailErrorText,
-      String? passErrorText});
+      String? passErrorText,
+      TextEditingController? nameController,
+      TextEditingController? emailController,
+      TextEditingController? passController,
+      String imagePath});
 }
 
 /// @nodoc
@@ -107,6 +142,10 @@ class __$$_CreateAccountPageStateCopyWithImpl<$Res>
     Object? nameErrorText = freezed,
     Object? emailErrorText = freezed,
     Object? passErrorText = freezed,
+    Object? nameController = freezed,
+    Object? emailController = freezed,
+    Object? passController = freezed,
+    Object? imagePath = freezed,
   }) {
     return _then(_$_CreateAccountPageState(
       iconImage: iconImage == freezed
@@ -125,6 +164,22 @@ class __$$_CreateAccountPageStateCopyWithImpl<$Res>
           ? _value.passErrorText
           : passErrorText // ignore: cast_nullable_to_non_nullable
               as String?,
+      nameController: nameController == freezed
+          ? _value.nameController
+          : nameController // ignore: cast_nullable_to_non_nullable
+              as TextEditingController?,
+      emailController: emailController == freezed
+          ? _value.emailController
+          : emailController // ignore: cast_nullable_to_non_nullable
+              as TextEditingController?,
+      passController: passController == freezed
+          ? _value.passController
+          : passController // ignore: cast_nullable_to_non_nullable
+              as TextEditingController?,
+      imagePath: imagePath == freezed
+          ? _value.imagePath
+          : imagePath // ignore: cast_nullable_to_non_nullable
+              as String,
     ));
   }
 }
@@ -138,7 +193,12 @@ class _$_CreateAccountPageState
       {this.iconImage,
       this.nameErrorText,
       this.emailErrorText,
-      this.passErrorText});
+      this.passErrorText,
+      this.nameController,
+      this.emailController,
+      this.passController,
+      this.imagePath =
+          "https://firebasestorage.googleapis.com/v0/b/sandbox-level1.appspot.com/o/default_icon.png?alt=media&token=bbbfd38f-887d-4da9-b048-c79cc2395d62"});
 
   @override
   final File? iconImage;
@@ -148,10 +208,20 @@ class _$_CreateAccountPageState
   final String? emailErrorText;
   @override
   final String? passErrorText;
+  @override
+  final TextEditingController? nameController;
+  @override
+  final TextEditingController? emailController;
+  @override
+  final TextEditingController? passController;
+//デフォルトアイコン画像のURLを設定しておく
+  @override
+  @JsonKey()
+  final String imagePath;
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'CreateAccountPageState(iconImage: $iconImage, nameErrorText: $nameErrorText, emailErrorText: $emailErrorText, passErrorText: $passErrorText)';
+    return 'CreateAccountPageState(iconImage: $iconImage, nameErrorText: $nameErrorText, emailErrorText: $emailErrorText, passErrorText: $passErrorText, nameController: $nameController, emailController: $emailController, passController: $passController, imagePath: $imagePath)';
   }
 
   @override
@@ -162,7 +232,11 @@ class _$_CreateAccountPageState
       ..add(DiagnosticsProperty('iconImage', iconImage))
       ..add(DiagnosticsProperty('nameErrorText', nameErrorText))
       ..add(DiagnosticsProperty('emailErrorText', emailErrorText))
-      ..add(DiagnosticsProperty('passErrorText', passErrorText));
+      ..add(DiagnosticsProperty('passErrorText', passErrorText))
+      ..add(DiagnosticsProperty('nameController', nameController))
+      ..add(DiagnosticsProperty('emailController', emailController))
+      ..add(DiagnosticsProperty('passController', passController))
+      ..add(DiagnosticsProperty('imagePath', imagePath));
   }
 
   @override
@@ -176,7 +250,14 @@ class _$_CreateAccountPageState
             const DeepCollectionEquality()
                 .equals(other.emailErrorText, emailErrorText) &&
             const DeepCollectionEquality()
-                .equals(other.passErrorText, passErrorText));
+                .equals(other.passErrorText, passErrorText) &&
+            const DeepCollectionEquality()
+                .equals(other.nameController, nameController) &&
+            const DeepCollectionEquality()
+                .equals(other.emailController, emailController) &&
+            const DeepCollectionEquality()
+                .equals(other.passController, passController) &&
+            const DeepCollectionEquality().equals(other.imagePath, imagePath));
   }
 
   @override
@@ -185,7 +266,11 @@ class _$_CreateAccountPageState
       const DeepCollectionEquality().hash(iconImage),
       const DeepCollectionEquality().hash(nameErrorText),
       const DeepCollectionEquality().hash(emailErrorText),
-      const DeepCollectionEquality().hash(passErrorText));
+      const DeepCollectionEquality().hash(passErrorText),
+      const DeepCollectionEquality().hash(nameController),
+      const DeepCollectionEquality().hash(emailController),
+      const DeepCollectionEquality().hash(passController),
+      const DeepCollectionEquality().hash(imagePath));
 
   @JsonKey(ignore: true)
   @override
@@ -199,7 +284,11 @@ abstract class _CreateAccountPageState implements CreateAccountPageState {
       {final File? iconImage,
       final String? nameErrorText,
       final String? emailErrorText,
-      final String? passErrorText}) = _$_CreateAccountPageState;
+      final String? passErrorText,
+      final TextEditingController? nameController,
+      final TextEditingController? emailController,
+      final TextEditingController? passController,
+      final String imagePath}) = _$_CreateAccountPageState;
 
   @override
   File? get iconImage => throw _privateConstructorUsedError;
@@ -209,6 +298,17 @@ abstract class _CreateAccountPageState implements CreateAccountPageState {
   String? get emailErrorText => throw _privateConstructorUsedError;
   @override
   String? get passErrorText => throw _privateConstructorUsedError;
+  @override
+  TextEditingController? get nameController =>
+      throw _privateConstructorUsedError;
+  @override
+  TextEditingController? get emailController =>
+      throw _privateConstructorUsedError;
+  @override
+  TextEditingController? get passController =>
+      throw _privateConstructorUsedError;
+  @override //デフォルトアイコン画像のURLを設定しておく
+  String get imagePath => throw _privateConstructorUsedError;
   @override
   @JsonKey(ignore: true)
   _$$_CreateAccountPageStateCopyWith<_$_CreateAccountPageState> get copyWith =>
