@@ -14,9 +14,9 @@ class CreateAccountPageState with _$CreateAccountPageState {
     String? nameErrorText,
     String? emailErrorText,
     String? passErrorText,
-    TextEditingController? nameController,
-    TextEditingController? emailController,
-    TextEditingController? passController,
+    required TextEditingController nameController,
+    required TextEditingController emailController,
+    required TextEditingController passController,
     //デフォルトアイコン画像のURLを設定しておく
 		@Default("https://firebasestorage.googleapis.com/v0/b/sandbox-level1.appspot.com/o/default_icon.png?alt=media&token=bbbfd38f-887d-4da9-b048-c79cc2395d62") String imagePath,
   }) = _CreateAccountPageState;

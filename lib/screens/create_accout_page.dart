@@ -82,9 +82,9 @@ class CreateAccountPage extends HookConsumerWidget {
                   onPressed: () async {
                     ref.read(createAccountPageProvider.notifier).initializeErrorText(); //エラーテキスト初期化
                     final checkController = ref.read(createAccountPageProvider.notifier).checkControllerText(//空欄がないかをチェック
-                            createAccountPageState.nameController!.text,
-                            createAccountPageState.passController!.text,
-                            createAccountPageState.emailController!.text
+                            createAccountPageState.nameController.text,
+                            createAccountPageState.passController.text,
+                            createAccountPageState.emailController.text
                     );
                     if (!checkController) return; //エラーがあったとき
                   },

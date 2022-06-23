@@ -20,11 +20,11 @@ mixin _$CreateAccountPageState {
   String? get nameErrorText => throw _privateConstructorUsedError;
   String? get emailErrorText => throw _privateConstructorUsedError;
   String? get passErrorText => throw _privateConstructorUsedError;
-  TextEditingController? get nameController =>
+  TextEditingController get nameController =>
       throw _privateConstructorUsedError;
-  TextEditingController? get emailController =>
+  TextEditingController get emailController =>
       throw _privateConstructorUsedError;
-  TextEditingController? get passController =>
+  TextEditingController get passController =>
       throw _privateConstructorUsedError; //デフォルトアイコン画像のURLを設定しておく
   String get imagePath => throw _privateConstructorUsedError;
 
@@ -43,9 +43,9 @@ abstract class $CreateAccountPageStateCopyWith<$Res> {
       String? nameErrorText,
       String? emailErrorText,
       String? passErrorText,
-      TextEditingController? nameController,
-      TextEditingController? emailController,
-      TextEditingController? passController,
+      TextEditingController nameController,
+      TextEditingController emailController,
+      TextEditingController passController,
       String imagePath});
 }
 
@@ -89,15 +89,15 @@ class _$CreateAccountPageStateCopyWithImpl<$Res>
       nameController: nameController == freezed
           ? _value.nameController
           : nameController // ignore: cast_nullable_to_non_nullable
-              as TextEditingController?,
+              as TextEditingController,
       emailController: emailController == freezed
           ? _value.emailController
           : emailController // ignore: cast_nullable_to_non_nullable
-              as TextEditingController?,
+              as TextEditingController,
       passController: passController == freezed
           ? _value.passController
           : passController // ignore: cast_nullable_to_non_nullable
-              as TextEditingController?,
+              as TextEditingController,
       imagePath: imagePath == freezed
           ? _value.imagePath
           : imagePath // ignore: cast_nullable_to_non_nullable
@@ -118,9 +118,9 @@ abstract class _$$_CreateAccountPageStateCopyWith<$Res>
       String? nameErrorText,
       String? emailErrorText,
       String? passErrorText,
-      TextEditingController? nameController,
-      TextEditingController? emailController,
-      TextEditingController? passController,
+      TextEditingController nameController,
+      TextEditingController emailController,
+      TextEditingController passController,
       String imagePath});
 }
 
@@ -167,15 +167,15 @@ class __$$_CreateAccountPageStateCopyWithImpl<$Res>
       nameController: nameController == freezed
           ? _value.nameController
           : nameController // ignore: cast_nullable_to_non_nullable
-              as TextEditingController?,
+              as TextEditingController,
       emailController: emailController == freezed
           ? _value.emailController
           : emailController // ignore: cast_nullable_to_non_nullable
-              as TextEditingController?,
+              as TextEditingController,
       passController: passController == freezed
           ? _value.passController
           : passController // ignore: cast_nullable_to_non_nullable
-              as TextEditingController?,
+              as TextEditingController,
       imagePath: imagePath == freezed
           ? _value.imagePath
           : imagePath // ignore: cast_nullable_to_non_nullable
@@ -194,9 +194,9 @@ class _$_CreateAccountPageState
       this.nameErrorText,
       this.emailErrorText,
       this.passErrorText,
-      this.nameController,
-      this.emailController,
-      this.passController,
+      required this.nameController,
+      required this.emailController,
+      required this.passController,
       this.imagePath =
           "https://firebasestorage.googleapis.com/v0/b/sandbox-level1.appspot.com/o/default_icon.png?alt=media&token=bbbfd38f-887d-4da9-b048-c79cc2395d62"});
 
@@ -209,11 +209,11 @@ class _$_CreateAccountPageState
   @override
   final String? passErrorText;
   @override
-  final TextEditingController? nameController;
+  final TextEditingController nameController;
   @override
-  final TextEditingController? emailController;
+  final TextEditingController emailController;
   @override
-  final TextEditingController? passController;
+  final TextEditingController passController;
 //デフォルトアイコン画像のURLを設定しておく
   @override
   @JsonKey()
@@ -285,9 +285,9 @@ abstract class _CreateAccountPageState implements CreateAccountPageState {
       final String? nameErrorText,
       final String? emailErrorText,
       final String? passErrorText,
-      final TextEditingController? nameController,
-      final TextEditingController? emailController,
-      final TextEditingController? passController,
+      required final TextEditingController nameController,
+      required final TextEditingController emailController,
+      required final TextEditingController passController,
       final String imagePath}) = _$_CreateAccountPageState;
 
   @override
@@ -299,13 +299,13 @@ abstract class _CreateAccountPageState implements CreateAccountPageState {
   @override
   String? get passErrorText => throw _privateConstructorUsedError;
   @override
-  TextEditingController? get nameController =>
+  TextEditingController get nameController =>
       throw _privateConstructorUsedError;
   @override
-  TextEditingController? get emailController =>
+  TextEditingController get emailController =>
       throw _privateConstructorUsedError;
   @override
-  TextEditingController? get passController =>
+  TextEditingController get passController =>
       throw _privateConstructorUsedError;
   @override //デフォルトアイコン画像のURLを設定しておく
   String get imagePath => throw _privateConstructorUsedError;
