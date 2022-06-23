@@ -89,6 +89,7 @@ class CreateAccountPage extends HookConsumerWidget {
 
                     final canUploadIconImage = await ref.read(createAccountPageProvider.notifier).upLoadIconImage();//iconImageをアップロード
                     if(!canUploadIconImage)return;//iconImageをアップロード出来なかった時
+                    //TODO ここから
                   },
                   child: const Text("登録"),
                 ),
