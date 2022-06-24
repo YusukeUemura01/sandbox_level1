@@ -35,16 +35,18 @@ class CreateAccountPage extends HookConsumerWidget {
                 ),
                 GestureDetector(
                   onTap: () async {
-                    final pickedFile = await FunctionUtils().getImageGallery(); //imagePickerで画像取得
-                    ref.read(createAccountPageProvider.notifier).changeIconImage(File(pickedFile.path));
+                    await ref.read(createAccountPageProvider.notifier).getImageAndChangeIconImage();//アイコン画像変更
                   },
                   child: CircleAvatar(
-                    foregroundImage: createAccountPageState.iconImage == null
+
+                    backgroundImage: createAccountPageState.iconImage == null
                         ? NetworkImage(createAccountPageState.imagePath)
                         : FileImage(createAccountPageState.iconImage!)
                             as ImageProvider,
                     radius: 40,
-                    child: const Icon(Icons.add),
+                    child: createAccountPageState.iconImage == null
+                        ? const Icon(Icons.camera_alt_outlined,color: Colors.black,size: 40,)
+                        : null
                   ),
                 ),
                 Container(
@@ -81,7 +83,7 @@ class CreateAccountPage extends HookConsumerWidget {
                 ElevatedButton(
                   onPressed: () async {
                     ref.read(createAccountPageProvider.notifier).initializeErrorText(); //エラーテキスト初期化
-                    final  existEmptyField = ref.read(createAccountPageProvider.notifier).checkControllerText();
+                    final  existEmptyField = ref.read(createAccountPageProvider.notifier).checkControllerText();//空欄がないかチェック
                     if (existEmptyField) return; //空欄があったとき
 
                     final canAuthenticationSingUp = await ref.read(createAccountPageProvider.notifier).authenticationSignUp();//signup

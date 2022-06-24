@@ -29,8 +29,9 @@ class CreateAccountPageState with _$CreateAccountPageState {
 class CreateAccountPageStateController extends StateNotifier<CreateAccountPageState>{
   CreateAccountPageStateController(CreateAccountPageState state) : super(state);
 
-  void changeIconImage(File newIconImage){
-    state = state.copyWith(iconImage: newIconImage);
+  Future<void> getImageAndChangeIconImage()async{
+    final pickedFile = await FunctionUtils().getImageGallery();
+    state = state.copyWith(iconImage: File(pickedFile.path));
   }
   void initializeErrorText(){
     state = state.copyWith(nameErrorText: null,passErrorText: null,emailErrorText: null);
