@@ -89,7 +89,7 @@ class CreateAccountPage extends HookConsumerWidget {
                         final controller = ref.read(createAccountPageProvider.notifier);
                         controller.changeIsLoading();//サークルインジェクターを出す
                         controller.initializeErrorText(); //エラーテキスト初期化
-                        final  existEmptyField = controller.checkControllerText();//空欄がないかチェック
+                        final existEmptyField = controller.checkControllerText();//空欄がないかチェック
                         if (existEmptyField) {//空欄があったときエラー
                           controller.changeIsLoading();
                           return;
@@ -105,6 +105,7 @@ class CreateAccountPage extends HookConsumerWidget {
                         if(canAuthenticationSingIn is FirebaseException){//エラーがかえってきたときエラーダイアログを出す
                           controller.changeIsLoading();
                           showErrorDialog(context,canAuthenticationSingIn);//エラーダイアログ
+                          return;
                         }
 
                         final canUploadIconImage = await controller.upLoadIconImage();//iconImageをアップロード
