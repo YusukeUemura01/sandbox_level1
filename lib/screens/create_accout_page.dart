@@ -87,10 +87,14 @@ class CreateAccountPage extends HookConsumerWidget {
                     if (existEmptyField) return; //空欄があったとき
 
                     final canAuthenticationSingUp = await ref.read(createAccountPageProvider.notifier).authenticationSignUp();//signup
-                    if(!canAuthenticationSingUp) return;//Authができなかったとき
+                    if(!canAuthenticationSingUp){//Authができなかったとき
+                      showErrorDialog(context);
+                    }
 
                     final canUploadIconImage = await ref.read(createAccountPageProvider.notifier).upLoadIconImage();//iconImageをアップロード
-                    if(!canUploadIconImage)return;//iconImageをアップロード出来なかった時
+                    if(!canUploadIconImage){//iconImageをアップロード出来なかった時
+                      showErrorDialog(context);
+                    }
                     //TODO ここから
                   },
                   child: const Text("登録"),
@@ -100,6 +104,28 @@ class CreateAccountPage extends HookConsumerWidget {
           ),
         ),
       ),
+    );
+  }
+
+
+  void showErrorDialog(BuildContext context) {
+    showDialog<void>(
+        context: context,
+        barrierDismissible: false, // user must tap button!
+        builder: (_) {
+          return AlertDialog(
+            title: const Text("エラーが発生しました"),
+            content: const Text("もう一度試してください"),
+            actions: [
+              TextButton(
+                child: const Text('戻る'),
+                onPressed: (){
+                  Navigator.of(context).pop();
+                },
+              ),
+            ],
+          );
+        }
     );
   }
 }
