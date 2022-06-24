@@ -17,7 +17,7 @@ final _privateConstructorUsedError = UnsupportedError(
 /// @nodoc
 mixin _$CreateAccountPageState {
   File? get iconImage => throw _privateConstructorUsedError;
-  UserCredential? get newAccount => throw _privateConstructorUsedError;
+  UserCredential? get newAccountAuth => throw _privateConstructorUsedError;
   String? get nameErrorText => throw _privateConstructorUsedError;
   String? get emailErrorText => throw _privateConstructorUsedError;
   String? get passErrorText => throw _privateConstructorUsedError;
@@ -27,6 +27,7 @@ mixin _$CreateAccountPageState {
       throw _privateConstructorUsedError;
   TextEditingController get passController =>
       throw _privateConstructorUsedError; //デフォルトアイコン画像のURLを設定しておく
+  bool get isLoading => throw _privateConstructorUsedError;
   String get imagePath => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
@@ -41,13 +42,14 @@ abstract class $CreateAccountPageStateCopyWith<$Res> {
       _$CreateAccountPageStateCopyWithImpl<$Res>;
   $Res call(
       {File? iconImage,
-      UserCredential? newAccount,
+      UserCredential? newAccountAuth,
       String? nameErrorText,
       String? emailErrorText,
       String? passErrorText,
       TextEditingController nameController,
       TextEditingController emailController,
       TextEditingController passController,
+      bool isLoading,
       String imagePath});
 }
 
@@ -63,13 +65,14 @@ class _$CreateAccountPageStateCopyWithImpl<$Res>
   @override
   $Res call({
     Object? iconImage = freezed,
-    Object? newAccount = freezed,
+    Object? newAccountAuth = freezed,
     Object? nameErrorText = freezed,
     Object? emailErrorText = freezed,
     Object? passErrorText = freezed,
     Object? nameController = freezed,
     Object? emailController = freezed,
     Object? passController = freezed,
+    Object? isLoading = freezed,
     Object? imagePath = freezed,
   }) {
     return _then(_value.copyWith(
@@ -77,9 +80,9 @@ class _$CreateAccountPageStateCopyWithImpl<$Res>
           ? _value.iconImage
           : iconImage // ignore: cast_nullable_to_non_nullable
               as File?,
-      newAccount: newAccount == freezed
-          ? _value.newAccount
-          : newAccount // ignore: cast_nullable_to_non_nullable
+      newAccountAuth: newAccountAuth == freezed
+          ? _value.newAccountAuth
+          : newAccountAuth // ignore: cast_nullable_to_non_nullable
               as UserCredential?,
       nameErrorText: nameErrorText == freezed
           ? _value.nameErrorText
@@ -105,6 +108,10 @@ class _$CreateAccountPageStateCopyWithImpl<$Res>
           ? _value.passController
           : passController // ignore: cast_nullable_to_non_nullable
               as TextEditingController,
+      isLoading: isLoading == freezed
+          ? _value.isLoading
+          : isLoading // ignore: cast_nullable_to_non_nullable
+              as bool,
       imagePath: imagePath == freezed
           ? _value.imagePath
           : imagePath // ignore: cast_nullable_to_non_nullable
@@ -122,13 +129,14 @@ abstract class _$$_CreateAccountPageStateCopyWith<$Res>
   @override
   $Res call(
       {File? iconImage,
-      UserCredential? newAccount,
+      UserCredential? newAccountAuth,
       String? nameErrorText,
       String? emailErrorText,
       String? passErrorText,
       TextEditingController nameController,
       TextEditingController emailController,
       TextEditingController passController,
+      bool isLoading,
       String imagePath});
 }
 
@@ -147,13 +155,14 @@ class __$$_CreateAccountPageStateCopyWithImpl<$Res>
   @override
   $Res call({
     Object? iconImage = freezed,
-    Object? newAccount = freezed,
+    Object? newAccountAuth = freezed,
     Object? nameErrorText = freezed,
     Object? emailErrorText = freezed,
     Object? passErrorText = freezed,
     Object? nameController = freezed,
     Object? emailController = freezed,
     Object? passController = freezed,
+    Object? isLoading = freezed,
     Object? imagePath = freezed,
   }) {
     return _then(_$_CreateAccountPageState(
@@ -161,9 +170,9 @@ class __$$_CreateAccountPageStateCopyWithImpl<$Res>
           ? _value.iconImage
           : iconImage // ignore: cast_nullable_to_non_nullable
               as File?,
-      newAccount: newAccount == freezed
-          ? _value.newAccount
-          : newAccount // ignore: cast_nullable_to_non_nullable
+      newAccountAuth: newAccountAuth == freezed
+          ? _value.newAccountAuth
+          : newAccountAuth // ignore: cast_nullable_to_non_nullable
               as UserCredential?,
       nameErrorText: nameErrorText == freezed
           ? _value.nameErrorText
@@ -189,6 +198,10 @@ class __$$_CreateAccountPageStateCopyWithImpl<$Res>
           ? _value.passController
           : passController // ignore: cast_nullable_to_non_nullable
               as TextEditingController,
+      isLoading: isLoading == freezed
+          ? _value.isLoading
+          : isLoading // ignore: cast_nullable_to_non_nullable
+              as bool,
       imagePath: imagePath == freezed
           ? _value.imagePath
           : imagePath // ignore: cast_nullable_to_non_nullable
@@ -204,20 +217,21 @@ class _$_CreateAccountPageState
     implements _CreateAccountPageState {
   _$_CreateAccountPageState(
       {this.iconImage,
-      this.newAccount,
+      this.newAccountAuth,
       this.nameErrorText,
       this.emailErrorText,
       this.passErrorText,
       required this.nameController,
       required this.emailController,
       required this.passController,
+      this.isLoading = false,
       this.imagePath =
           "https://firebasestorage.googleapis.com/v0/b/sandbox-level1.appspot.com/o/default_icon.png?alt=media&token=bbbfd38f-887d-4da9-b048-c79cc2395d62"});
 
   @override
   final File? iconImage;
   @override
-  final UserCredential? newAccount;
+  final UserCredential? newAccountAuth;
   @override
   final String? nameErrorText;
   @override
@@ -233,11 +247,14 @@ class _$_CreateAccountPageState
 //デフォルトアイコン画像のURLを設定しておく
   @override
   @JsonKey()
+  final bool isLoading;
+  @override
+  @JsonKey()
   final String imagePath;
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'CreateAccountPageState(iconImage: $iconImage, newAccount: $newAccount, nameErrorText: $nameErrorText, emailErrorText: $emailErrorText, passErrorText: $passErrorText, nameController: $nameController, emailController: $emailController, passController: $passController, imagePath: $imagePath)';
+    return 'CreateAccountPageState(iconImage: $iconImage, newAccountAuth: $newAccountAuth, nameErrorText: $nameErrorText, emailErrorText: $emailErrorText, passErrorText: $passErrorText, nameController: $nameController, emailController: $emailController, passController: $passController, isLoading: $isLoading, imagePath: $imagePath)';
   }
 
   @override
@@ -246,13 +263,14 @@ class _$_CreateAccountPageState
     properties
       ..add(DiagnosticsProperty('type', 'CreateAccountPageState'))
       ..add(DiagnosticsProperty('iconImage', iconImage))
-      ..add(DiagnosticsProperty('newAccount', newAccount))
+      ..add(DiagnosticsProperty('newAccountAuth', newAccountAuth))
       ..add(DiagnosticsProperty('nameErrorText', nameErrorText))
       ..add(DiagnosticsProperty('emailErrorText', emailErrorText))
       ..add(DiagnosticsProperty('passErrorText', passErrorText))
       ..add(DiagnosticsProperty('nameController', nameController))
       ..add(DiagnosticsProperty('emailController', emailController))
       ..add(DiagnosticsProperty('passController', passController))
+      ..add(DiagnosticsProperty('isLoading', isLoading))
       ..add(DiagnosticsProperty('imagePath', imagePath));
   }
 
@@ -263,7 +281,7 @@ class _$_CreateAccountPageState
             other is _$_CreateAccountPageState &&
             const DeepCollectionEquality().equals(other.iconImage, iconImage) &&
             const DeepCollectionEquality()
-                .equals(other.newAccount, newAccount) &&
+                .equals(other.newAccountAuth, newAccountAuth) &&
             const DeepCollectionEquality()
                 .equals(other.nameErrorText, nameErrorText) &&
             const DeepCollectionEquality()
@@ -276,6 +294,7 @@ class _$_CreateAccountPageState
                 .equals(other.emailController, emailController) &&
             const DeepCollectionEquality()
                 .equals(other.passController, passController) &&
+            const DeepCollectionEquality().equals(other.isLoading, isLoading) &&
             const DeepCollectionEquality().equals(other.imagePath, imagePath));
   }
 
@@ -283,13 +302,14 @@ class _$_CreateAccountPageState
   int get hashCode => Object.hash(
       runtimeType,
       const DeepCollectionEquality().hash(iconImage),
-      const DeepCollectionEquality().hash(newAccount),
+      const DeepCollectionEquality().hash(newAccountAuth),
       const DeepCollectionEquality().hash(nameErrorText),
       const DeepCollectionEquality().hash(emailErrorText),
       const DeepCollectionEquality().hash(passErrorText),
       const DeepCollectionEquality().hash(nameController),
       const DeepCollectionEquality().hash(emailController),
       const DeepCollectionEquality().hash(passController),
+      const DeepCollectionEquality().hash(isLoading),
       const DeepCollectionEquality().hash(imagePath));
 
   @JsonKey(ignore: true)
@@ -302,19 +322,20 @@ class _$_CreateAccountPageState
 abstract class _CreateAccountPageState implements CreateAccountPageState {
   factory _CreateAccountPageState(
       {final File? iconImage,
-      final UserCredential? newAccount,
+      final UserCredential? newAccountAuth,
       final String? nameErrorText,
       final String? emailErrorText,
       final String? passErrorText,
       required final TextEditingController nameController,
       required final TextEditingController emailController,
       required final TextEditingController passController,
+      final bool isLoading,
       final String imagePath}) = _$_CreateAccountPageState;
 
   @override
   File? get iconImage => throw _privateConstructorUsedError;
   @override
-  UserCredential? get newAccount => throw _privateConstructorUsedError;
+  UserCredential? get newAccountAuth => throw _privateConstructorUsedError;
   @override
   String? get nameErrorText => throw _privateConstructorUsedError;
   @override
@@ -331,6 +352,8 @@ abstract class _CreateAccountPageState implements CreateAccountPageState {
   TextEditingController get passController =>
       throw _privateConstructorUsedError;
   @override //デフォルトアイコン画像のURLを設定しておく
+  bool get isLoading => throw _privateConstructorUsedError;
+  @override
   String get imagePath => throw _privateConstructorUsedError;
   @override
   @JsonKey(ignore: true)
