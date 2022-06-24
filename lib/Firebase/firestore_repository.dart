@@ -5,13 +5,13 @@ class FirestoreRepository{
   final _fireStoreInstance = FirebaseFirestore.instance;
 
 
-  Future<bool> setAccountData(Account _newAccount)async{//user情報をfirestoreにセット
+  Future<dynamic> setAccountData(Account _newAccount)async{//user情報をfirestoreにセット
     final newAccountToJson = _newAccount.toJson();
     try{
       await _fireStoreInstance.collection("users").doc(_newAccount.id).set(newAccountToJson);
       return true;
     }on FirebaseException catch(e){
-      return false;
+      return e;
     }
   }
 }

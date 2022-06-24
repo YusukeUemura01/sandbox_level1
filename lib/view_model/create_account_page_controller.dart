@@ -60,21 +60,21 @@ class CreateAccountPageStateController extends StateNotifier<CreateAccountPageSt
       return true;
     }
   }
-  Future<bool>authenticationSignUp()async {
+  Future<dynamic>authenticationSignUp()async {
     final newAccountAuth = await Authentication().signUp(state.emailController.text, state.passController.text);
     if(newAccountAuth is UserCredential){
       state = state.copyWith(newAccountAuth: newAccountAuth);
       return true;
     }else{
       print("Authエラー");
-      return false;
+      return newAccountAuth;//エラー文を返す
     }
   }
-  Future<bool>authenticationSignIn()async {
+  Future<dynamic>authenticationSignIn()async {
     final canSingIn = await Authentication().signIn(state.emailController.text, state.passController.text);
     return canSingIn;
   }
-  Future<bool>upLoadIconImage()async{
+  Future<dynamic>upLoadIconImage()async{
     if(state.iconImage == null)return true;//アイコンが選択されていない時アップロードしない
     try{
       final _imagePath = await FunctionUtils().upLoadImage(state.newAccountAuth!.user!.uid, state.iconImage!);//iconをアップロード
@@ -82,10 +82,10 @@ class CreateAccountPageStateController extends StateNotifier<CreateAccountPageSt
       return true;
     }on FirebaseException catch(e){
       print("iconImageアップロードエラー$e");
-      return false;
+      return e;
     }
   }
-  Future<bool>setAccountData()async{
+  Future<dynamic>setAccountData()async{
     final _newAccount = Account(
         id: _uuid.v4(),
         userName: state.nameController.text,

@@ -96,27 +96,27 @@ class CreateAccountPage extends HookConsumerWidget {
                         }
 
                         final canAuthenticationSingUp = await controller.authenticationSignUp();//signup
-                        if(!canAuthenticationSingUp){//singUpできなかったときエラーダイアログを出す
+                        if(canAuthenticationSingUp is FirebaseException){//エラーがかえってきたときエラーダイアログを出す
                           controller.changeIsLoading();
-                          showErrorDialog(context);//エラーダイアログ
+                          showErrorDialog(context,canAuthenticationSingUp);//エラーダイアログ
                           return;
                         }
                         final canAuthenticationSingIn = await controller.authenticationSignIn();//作ったアカウントでsignin
-                        if(!canAuthenticationSingIn){//sigInできなかったときエラーダイアログを出す
+                        if(canAuthenticationSingIn is FirebaseException){//エラーがかえってきたときエラーダイアログを出す
                           controller.changeIsLoading();
-                          showErrorDialog(context);//エラーダイアログ
+                          showErrorDialog(context,canAuthenticationSingIn);//エラーダイアログ
                         }
 
                         final canUploadIconImage = await controller.upLoadIconImage();//iconImageをアップロード
-                        if(!canUploadIconImage){//iconImageをアップロード出来なかった時エラーダイアログを出す
+                        if(canUploadIconImage is FirebaseException){//エラーがかえってきたときエラーダイアログを出す
                           controller.changeIsLoading();
-                          showErrorDialog(context);//エラーダイアログ
+                          showErrorDialog(context,canUploadIconImage);//エラーダイアログ
                           return;
                         }
                         final canSaveOnFirestore = await controller.setAccountData();
-                        if(!canSaveOnFirestore){//firestoreに保存できなかったらエラーダイアログを出す
+                        if(canSaveOnFirestore is FirebaseException){//エラーがかえってきたときエラーダイアログを出す
                           controller.changeIsLoading();
-                          showErrorDialog(context);//エラーダイアログ
+                          showErrorDialog(context,canSaveOnFirestore);//エラーダイアログ
                           return;
                         }
                         controller.changeIsLoading();
@@ -149,14 +149,14 @@ class CreateAccountPage extends HookConsumerWidget {
   }
 
 
-  void showErrorDialog(BuildContext context) {
+  void showErrorDialog(BuildContext context,FirebaseException errorException) {
     showDialog<void>(
         context: context,
         barrierDismissible: false, // user must tap button!
         builder: (_) {
           return AlertDialog(
             title: const Text("エラーが発生しました"),
-            content: const Text("もう一度試してください"),
+            content: Text("$errorException"),
             actions: [
               TextButton(
                 child: const Text('戻る'),
