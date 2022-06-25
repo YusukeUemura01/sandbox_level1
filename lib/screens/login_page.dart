@@ -1,15 +1,24 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:sandbox_level1/screens/create_accout_page.dart';
+import 'package:sandbox_level1/view_model/loginpage_controller.dart';
 
 
-class LoginPage extends StatelessWidget {
+final loginPageProvider = StateNotifierProvider<
+    LoginPageStateController, LoginPageState>((ref) {
+  return LoginPageStateController(LoginPageState(
+    passFiledController: TextEditingController(),
+    emailFiledController: TextEditingController(),
+  ));
+});
+
+class LoginPage extends HookConsumerWidget{
   LoginPage({Key? key}) : super(key: key);
-  TextEditingController emailController = TextEditingController();
-  TextEditingController passController = TextEditingController();
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context,WidgetRef ref) {
+    final loginPageState = ref.watch(loginPageProvider);
     return Scaffold(
       body: SafeArea(
         child: SizedBox(
@@ -23,19 +32,21 @@ class LoginPage extends StatelessWidget {
               SizedBox(
                 width: 300,
                 child: TextField(
-                  controller: emailController,
-                  decoration: const InputDecoration(
-                      hintText: 'メールアドレス'
+                  controller: loginPageState.emailFiledController,
+                  decoration: InputDecoration(
+                      hintText: 'メールアドレス',
+                      errorText: loginPageState.emailFiledErrorText,
                   ),
                 ),
               ),
               SizedBox(
                 width: 300,
                 child: TextField(
-                  decoration: const InputDecoration(
+                  decoration: InputDecoration(
+                    errorText: loginPageState.passFiledErrorText,
                       hintText: 'パスワード'
                   ),
-                  controller: passController,
+                  controller: loginPageState.passFiledController,
                 ),
               ),
               const SizedBox(
@@ -59,6 +70,9 @@ class LoginPage extends StatelessWidget {
                 ),
               ),
               ElevatedButton(onPressed: ()async{
+                final controller = ref.read(loginPageProvider.notifier);
+                controller.checkControllerText();//空欄がいないかをチェック
+                //TODO ここから
 
               },
                 child: const Text("ログイン"),

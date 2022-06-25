@@ -121,7 +121,7 @@ class CreateAccountPage extends HookConsumerWidget {
                           return;
                         }
                         controller.changeIsLoading();
-                        Navigator.of(context).push(
+                        Navigator.of(context).pushReplacement(
                           MaterialPageRoute(
                             builder: (context) {
                               return MyChatPage();
