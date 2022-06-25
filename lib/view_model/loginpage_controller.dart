@@ -15,8 +15,11 @@ class LoginPageState with _$LoginPageState {
     String? emailFiledErrorText,
     String? passFiledErrorText,
     Account? loginAccount,
+    dynamic successSignIn,
+    dynamic successGetAccountData,
 		// 初期値
     @Default(false) bool isLoading,
+    @Default(true) bool existEmptyFiled,
   }) = _LoginPageState;
 }
 
@@ -26,10 +29,10 @@ class LoginPageStateController extends StateNotifier<LoginPageState>{
 
   Future<dynamic>authenticationSignIn()async {
     final canSingIn = await Authentication().signIn(state.emailFiledController.text, state.passFiledController.text);
-    return canSingIn;
+    state = state.copyWith(successSignIn: canSingIn);
   }
 
-  bool checkControllerText(){
+  void checkControllerText(){
     if(state.passFiledController.text.isEmpty){
       state = state.copyWith(passFiledErrorText: "パスワードが入力されていません");
     }
@@ -37,9 +40,7 @@ class LoginPageStateController extends StateNotifier<LoginPageState>{
       state = state.copyWith(emailFiledErrorText: "メールアドレスが入力されていません");
     }
     if(state.emailFiledErrorText == null && state.passFiledErrorText == null){//全ての欄が埋まっていた時
-      return false;
-    }else{
-      return true;
+      state = state.copyWith(existEmptyFiled: false);
     }
   }
 }

@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
@@ -72,7 +73,12 @@ class LoginPage extends HookConsumerWidget{
               ElevatedButton(onPressed: ()async{
                 final controller = ref.read(loginPageProvider.notifier);
                 controller.checkControllerText();//空欄がいないかをチェック
-                //TODO ここから
+                await controller.authenticationSignIn();//サイイン
+                if(loginPageState.successSignIn is FirebaseException){
+
+                }
+                //TODO FireStoreから情報取得
+
 
               },
                 child: const Text("ログイン"),
