@@ -10,11 +10,10 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:sandbox_level1/Firebase/auth_repository.dart';
 import 'package:sandbox_level1/Firebase/firestore_repository.dart';
 import 'package:sandbox_level1/utils/function_utils.dart';
-import 'package:uuid/uuid.dart';
 import '../model/account.dart';
 part 'create_account_page_controller.freezed.dart';
 
-const _uuid = Uuid();
+
 @freezed
 class CreateAccountPageState with _$CreateAccountPageState {
   factory CreateAccountPageState({
@@ -44,7 +43,7 @@ class CreateAccountPageStateController extends StateNotifier<CreateAccountPageSt
   void initializeErrorText(){
     state = state.copyWith(nameErrorText: null,passErrorText: null,emailErrorText: null);
   }
-  bool checkControllerText(){
+  bool checkTextFiledError(){
     if(state.nameController.text.isEmpty){
       state = state.copyWith(nameErrorText: "名前が入力されていません");
     }
@@ -70,11 +69,7 @@ class CreateAccountPageStateController extends StateNotifier<CreateAccountPageSt
       print("Authエラー");
       return _resultSignUp;
     }
-    return null;
-  }
-  Future<FirebaseException?>authenticationSignIn()async {
-    final _singInException = await Authentication().signIn(state.emailController.text, state.passController.text);
-    return _singInException;
+    return FirebaseException(plugin: "エラー");
   }
   Future<FirebaseException?>upLoadIconImage()async{
     if(state.iconImage == null)return null;//アイコンが選択されていない時アップロードしない
@@ -89,12 +84,12 @@ class CreateAccountPageStateController extends StateNotifier<CreateAccountPageSt
   }
   Future<FirebaseException?>setAccountData()async{
     final _newAccount = Account(
-        id: _uuid.v4(),
+        id: state.newUserCredential!.user!.uid,
         userName: state.nameController.text,
         imagePath: state.imagePath,
         updateTime: DateTime.now()
     );
-    final _setAccountDataException = await FirestoreRepository().setAccountData(_newAccount);//firestoreに保存
+    final _setAccountDataException = await FirestoreRepository().setAccountDataOnFirestore(_newAccount);//firestoreに保存
     FirestoreRepository().setCurrentLoginAccount(_newAccount);//FirestoreRepositoryに保存
     return _setAccountDataException;
   }

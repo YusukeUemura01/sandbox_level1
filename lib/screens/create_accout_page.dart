@@ -90,7 +90,7 @@ class CreateAccountPage extends HookConsumerWidget {
                         final utils = FunctionUtils();
                         controller.changeIsLoading();//サークルインジェクターを出す
                         controller.initializeErrorText(); //エラーテキスト初期化
-                        final existEmptyField = controller.checkControllerText();//空欄がないかチェック
+                        final existEmptyField = controller.checkTextFiledError();//空欄がないかチェック
                         if (existEmptyField) {//空欄があったときエラー
                           controller.changeIsLoading();
                           return;
@@ -103,12 +103,6 @@ class CreateAccountPage extends HookConsumerWidget {
                           return;
                         }
 
-                        final singInErrorException = await controller.authenticationSignIn();//作ったアカウントでsignin
-                        if(singInErrorException != null){//エラーがかえってきたときエラーダイアログを出す
-                          controller.changeIsLoading();
-                          utils.showErrorDialog(context,singInErrorException);//エラーダイアログ
-                          return;
-                        }
 
                         final uploadIconImageErrorException = await controller.upLoadIconImage();//iconImageをアップロード
                         if(uploadIconImageErrorException != null){//エラーがかえってきたときエラーダイアログを出す

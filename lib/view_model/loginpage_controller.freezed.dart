@@ -23,11 +23,9 @@ mixin _$LoginPageState {
   String? get emailFiledErrorText => throw _privateConstructorUsedError;
   String? get passFiledErrorText => throw _privateConstructorUsedError;
   Account? get loginAccount => throw _privateConstructorUsedError;
-  dynamic get successSignIn => throw _privateConstructorUsedError;
-  dynamic get successGetAccountData =>
+  UserCredential? get loginUserCredential =>
       throw _privateConstructorUsedError; // 初期値
   bool get isLoading => throw _privateConstructorUsedError;
-  bool get existEmptyFiled => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
   $LoginPageStateCopyWith<LoginPageState> get copyWith =>
@@ -45,10 +43,8 @@ abstract class $LoginPageStateCopyWith<$Res> {
       String? emailFiledErrorText,
       String? passFiledErrorText,
       Account? loginAccount,
-      dynamic successSignIn,
-      dynamic successGetAccountData,
-      bool isLoading,
-      bool existEmptyFiled});
+      UserCredential? loginUserCredential,
+      bool isLoading});
 
   $AccountCopyWith<$Res>? get loginAccount;
 }
@@ -69,10 +65,8 @@ class _$LoginPageStateCopyWithImpl<$Res>
     Object? emailFiledErrorText = freezed,
     Object? passFiledErrorText = freezed,
     Object? loginAccount = freezed,
-    Object? successSignIn = freezed,
-    Object? successGetAccountData = freezed,
+    Object? loginUserCredential = freezed,
     Object? isLoading = freezed,
-    Object? existEmptyFiled = freezed,
   }) {
     return _then(_value.copyWith(
       emailFiledController: emailFiledController == freezed
@@ -95,21 +89,13 @@ class _$LoginPageStateCopyWithImpl<$Res>
           ? _value.loginAccount
           : loginAccount // ignore: cast_nullable_to_non_nullable
               as Account?,
-      successSignIn: successSignIn == freezed
-          ? _value.successSignIn
-          : successSignIn // ignore: cast_nullable_to_non_nullable
-              as dynamic,
-      successGetAccountData: successGetAccountData == freezed
-          ? _value.successGetAccountData
-          : successGetAccountData // ignore: cast_nullable_to_non_nullable
-              as dynamic,
+      loginUserCredential: loginUserCredential == freezed
+          ? _value.loginUserCredential
+          : loginUserCredential // ignore: cast_nullable_to_non_nullable
+              as UserCredential?,
       isLoading: isLoading == freezed
           ? _value.isLoading
           : isLoading // ignore: cast_nullable_to_non_nullable
-              as bool,
-      existEmptyFiled: existEmptyFiled == freezed
-          ? _value.existEmptyFiled
-          : existEmptyFiled // ignore: cast_nullable_to_non_nullable
               as bool,
     ));
   }
@@ -139,10 +125,8 @@ abstract class _$$_LoginPageStateCopyWith<$Res>
       String? emailFiledErrorText,
       String? passFiledErrorText,
       Account? loginAccount,
-      dynamic successSignIn,
-      dynamic successGetAccountData,
-      bool isLoading,
-      bool existEmptyFiled});
+      UserCredential? loginUserCredential,
+      bool isLoading});
 
   @override
   $AccountCopyWith<$Res>? get loginAccount;
@@ -166,10 +150,8 @@ class __$$_LoginPageStateCopyWithImpl<$Res>
     Object? emailFiledErrorText = freezed,
     Object? passFiledErrorText = freezed,
     Object? loginAccount = freezed,
-    Object? successSignIn = freezed,
-    Object? successGetAccountData = freezed,
+    Object? loginUserCredential = freezed,
     Object? isLoading = freezed,
-    Object? existEmptyFiled = freezed,
   }) {
     return _then(_$_LoginPageState(
       emailFiledController: emailFiledController == freezed
@@ -192,21 +174,13 @@ class __$$_LoginPageStateCopyWithImpl<$Res>
           ? _value.loginAccount
           : loginAccount // ignore: cast_nullable_to_non_nullable
               as Account?,
-      successSignIn: successSignIn == freezed
-          ? _value.successSignIn
-          : successSignIn // ignore: cast_nullable_to_non_nullable
-              as dynamic,
-      successGetAccountData: successGetAccountData == freezed
-          ? _value.successGetAccountData
-          : successGetAccountData // ignore: cast_nullable_to_non_nullable
-              as dynamic,
+      loginUserCredential: loginUserCredential == freezed
+          ? _value.loginUserCredential
+          : loginUserCredential // ignore: cast_nullable_to_non_nullable
+              as UserCredential?,
       isLoading: isLoading == freezed
           ? _value.isLoading
           : isLoading // ignore: cast_nullable_to_non_nullable
-              as bool,
-      existEmptyFiled: existEmptyFiled == freezed
-          ? _value.existEmptyFiled
-          : existEmptyFiled // ignore: cast_nullable_to_non_nullable
               as bool,
     ));
   }
@@ -223,10 +197,8 @@ class _$_LoginPageState
       this.emailFiledErrorText,
       this.passFiledErrorText,
       this.loginAccount,
-      this.successSignIn,
-      this.successGetAccountData,
-      this.isLoading = false,
-      this.existEmptyFiled = true});
+      this.loginUserCredential,
+      this.isLoading = false});
 
   @override
   final TextEditingController emailFiledController;
@@ -239,20 +211,15 @@ class _$_LoginPageState
   @override
   final Account? loginAccount;
   @override
-  final dynamic successSignIn;
-  @override
-  final dynamic successGetAccountData;
+  final UserCredential? loginUserCredential;
 // 初期値
   @override
   @JsonKey()
   final bool isLoading;
-  @override
-  @JsonKey()
-  final bool existEmptyFiled;
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'LoginPageState(emailFiledController: $emailFiledController, passFiledController: $passFiledController, emailFiledErrorText: $emailFiledErrorText, passFiledErrorText: $passFiledErrorText, loginAccount: $loginAccount, successSignIn: $successSignIn, successGetAccountData: $successGetAccountData, isLoading: $isLoading, existEmptyFiled: $existEmptyFiled)';
+    return 'LoginPageState(emailFiledController: $emailFiledController, passFiledController: $passFiledController, emailFiledErrorText: $emailFiledErrorText, passFiledErrorText: $passFiledErrorText, loginAccount: $loginAccount, loginUserCredential: $loginUserCredential, isLoading: $isLoading)';
   }
 
   @override
@@ -265,10 +232,8 @@ class _$_LoginPageState
       ..add(DiagnosticsProperty('emailFiledErrorText', emailFiledErrorText))
       ..add(DiagnosticsProperty('passFiledErrorText', passFiledErrorText))
       ..add(DiagnosticsProperty('loginAccount', loginAccount))
-      ..add(DiagnosticsProperty('successSignIn', successSignIn))
-      ..add(DiagnosticsProperty('successGetAccountData', successGetAccountData))
-      ..add(DiagnosticsProperty('isLoading', isLoading))
-      ..add(DiagnosticsProperty('existEmptyFiled', existEmptyFiled));
+      ..add(DiagnosticsProperty('loginUserCredential', loginUserCredential))
+      ..add(DiagnosticsProperty('isLoading', isLoading));
   }
 
   @override
@@ -287,12 +252,8 @@ class _$_LoginPageState
             const DeepCollectionEquality()
                 .equals(other.loginAccount, loginAccount) &&
             const DeepCollectionEquality()
-                .equals(other.successSignIn, successSignIn) &&
-            const DeepCollectionEquality()
-                .equals(other.successGetAccountData, successGetAccountData) &&
-            const DeepCollectionEquality().equals(other.isLoading, isLoading) &&
-            const DeepCollectionEquality()
-                .equals(other.existEmptyFiled, existEmptyFiled));
+                .equals(other.loginUserCredential, loginUserCredential) &&
+            const DeepCollectionEquality().equals(other.isLoading, isLoading));
   }
 
   @override
@@ -303,10 +264,8 @@ class _$_LoginPageState
       const DeepCollectionEquality().hash(emailFiledErrorText),
       const DeepCollectionEquality().hash(passFiledErrorText),
       const DeepCollectionEquality().hash(loginAccount),
-      const DeepCollectionEquality().hash(successSignIn),
-      const DeepCollectionEquality().hash(successGetAccountData),
-      const DeepCollectionEquality().hash(isLoading),
-      const DeepCollectionEquality().hash(existEmptyFiled));
+      const DeepCollectionEquality().hash(loginUserCredential),
+      const DeepCollectionEquality().hash(isLoading));
 
   @JsonKey(ignore: true)
   @override
@@ -321,10 +280,8 @@ abstract class _LoginPageState implements LoginPageState {
       final String? emailFiledErrorText,
       final String? passFiledErrorText,
       final Account? loginAccount,
-      final dynamic successSignIn,
-      final dynamic successGetAccountData,
-      final bool isLoading,
-      final bool existEmptyFiled}) = _$_LoginPageState;
+      final UserCredential? loginUserCredential,
+      final bool isLoading}) = _$_LoginPageState;
 
   @override
   TextEditingController get emailFiledController =>
@@ -339,13 +296,9 @@ abstract class _LoginPageState implements LoginPageState {
   @override
   Account? get loginAccount => throw _privateConstructorUsedError;
   @override
-  dynamic get successSignIn => throw _privateConstructorUsedError;
-  @override
-  dynamic get successGetAccountData => throw _privateConstructorUsedError;
+  UserCredential? get loginUserCredential => throw _privateConstructorUsedError;
   @override // 初期値
   bool get isLoading => throw _privateConstructorUsedError;
-  @override
-  bool get existEmptyFiled => throw _privateConstructorUsedError;
   @override
   @JsonKey(ignore: true)
   _$$_LoginPageStateCopyWith<_$_LoginPageState> get copyWith =>

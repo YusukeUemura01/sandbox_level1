@@ -3,6 +3,8 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:sandbox_level1/screens/create_accout_page.dart';
+import 'package:sandbox_level1/screens/mychatpage.dart';
+import 'package:sandbox_level1/utils/function_utils.dart';
 import 'package:sandbox_level1/view_model/loginpage_controller.dart';
 
 
@@ -22,69 +24,103 @@ class LoginPage extends HookConsumerWidget{
     final loginPageState = ref.watch(loginPageProvider);
     return Scaffold(
       body: SafeArea(
-        child: SizedBox(
-          width: double.infinity,
-          child: Column(
-            children: [
-              const SizedBox(
-                height: 50,
-              ),
-              const Text(""),
-              SizedBox(
-                width: 300,
-                child: TextField(
-                  controller: loginPageState.emailFiledController,
-                  decoration: InputDecoration(
-                      hintText: 'メールアドレス',
-                      errorText: loginPageState.emailFiledErrorText,
-                  ),
-                ),
-              ),
-              SizedBox(
-                width: 300,
-                child: TextField(
-                  decoration: InputDecoration(
-                    errorText: loginPageState.passFiledErrorText,
-                      hintText: 'パスワード'
-                  ),
-                  controller: loginPageState.passFiledController,
-                ),
-              ),
-              const SizedBox(
-                height: 10,
-              ),
-              RichText(
-                text: TextSpan(
-                    style: const TextStyle(color: Colors.black),
-                    children: [
-                      const TextSpan(text: "アカウントを作成していない方は"),
-                      TextSpan(
-                        text: "こちら",
-                        recognizer: TapGestureRecognizer()..onTap=(){
-                          Navigator.push(context, MaterialPageRoute(builder: (context) => CreateAccountPage()));
-                        },
-                        style: const TextStyle(
-                          color: Colors.blue,
+        child: Stack(
+          alignment: Alignment.center,
+          children: [
+            SingleChildScrollView(
+              child: SizedBox(
+                width: double.infinity,
+                child: Column(
+                  children: [
+                    const SizedBox(
+                      height: 50,
+                    ),
+                    const Text(""),
+                    SizedBox(
+                      width: 300,
+                      child: TextField(
+                        controller: loginPageState.emailFiledController,
+                        decoration: InputDecoration(
+                          hintText: 'メールアドレス',
+                          errorText: loginPageState.emailFiledErrorText,
                         ),
                       ),
-                    ]
+                    ),
+                    SizedBox(
+                      width: 300,
+                      child: TextField(
+                        decoration: InputDecoration(
+                            errorText: loginPageState.passFiledErrorText,
+                            hintText: 'パスワード'
+                        ),
+                        controller: loginPageState.passFiledController,
+                      ),
+                    ),
+                    const SizedBox(
+                      height: 10,
+                    ),
+                    RichText(
+                      text: TextSpan(
+                          style: const TextStyle(color: Colors.black),
+                          children: [
+                            const TextSpan(text: "アカウントを作成していない方は"),
+                            TextSpan(
+                              text: "こちら",
+                              recognizer: TapGestureRecognizer()..onTap=(){
+                                Navigator.push(context, MaterialPageRoute(builder: (context) => CreateAccountPage()));
+                              },
+                              style: const TextStyle(
+                                color: Colors.blue,
+                              ),
+                            ),
+                          ]
+                      ),
+                    ),
+                    ElevatedButton(onPressed: ()async{
+                      final controller = ref.read(loginPageProvider.notifier);
+                      final FunctionUtils utils = FunctionUtils();
+                      controller.initializeErrorText();
+                      controller.changeIsLoading();
+                      final _existEmptyFiled = controller.checkTextFiledError();//空欄がいないかをチェック
+                      if(_existEmptyFiled){
+                        controller.changeIsLoading();
+                        return;
+                      }
+                      final _signInErrorException = await controller.authenticationSignIn();//サイイン
+                      if(_signInErrorException != null){
+                        controller.changeIsLoading();
+                        utils.showErrorDialog(context,_signInErrorException);//エラーダイアログ
+                        return;
+                      }
+                      final _getAccountDataErrorException = await controller.getAccountData();//Account情報とってくる
+                      if(_getAccountDataErrorException != null){
+                        controller.changeIsLoading();
+                        utils.showErrorDialog(context,_getAccountDataErrorException);//エラーダイアログ
+                        return;
+                      }
+                      controller.changeIsLoading();
+                      Navigator.of(context).pushReplacement(
+                        MaterialPageRoute(
+                          builder: (context) {
+                            return MyChatPage();
+                          },
+                        ),
+                      );
+                    },
+                      child: const Text("ログイン"),
+                    )
+                  ],
                 ),
               ),
-              ElevatedButton(onPressed: ()async{
-                final controller = ref.read(loginPageProvider.notifier);
-                controller.checkControllerText();//空欄がいないかをチェック
-                await controller.authenticationSignIn();//サイイン
-                if(loginPageState.successSignIn is FirebaseException){
-
-                }
-                //TODO FireStoreから情報取得
-
-
-              },
-                child: const Text("ログイン"),
-              )
-            ],
-          ),
+            ),
+            loginPageState.isLoading == true
+                ? const SizedBox(
+                height: 50,
+                width: 50,
+                child: CircularProgressIndicator()
+            )
+                : const SizedBox()
+          ],
         ),
       ),
     );

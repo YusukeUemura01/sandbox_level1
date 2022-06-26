@@ -12,10 +12,10 @@ class Authentication{
       return e;
     }
   }
-  Future<FirebaseException?> signIn(String email,String pass)async{//アカウントを登録するメソッド
+  Future<dynamic> signIn(String email,String pass)async{//アカウントを登録するメソッド
     try{
-      await userAuth.signInWithEmailAndPassword(email: email, password: pass);
-      return null;
+      final logInUserCredential = await userAuth.signInWithEmailAndPassword(email: email, password: pass);
+      return logInUserCredential;
     }on FirebaseException catch(e){
       print("サイインエラー$e");
       return e;

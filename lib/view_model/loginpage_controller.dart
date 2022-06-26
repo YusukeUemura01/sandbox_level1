@@ -1,9 +1,15 @@
 
+
+
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:sandbox_level1/Firebase/auth_repository.dart';
+import 'package:flutter/material.dart';
+import 'package:sandbox_level1/Firebase/firestore_repository.dart';
 
 import '../model/account.dart';
 part 'loginpage_controller.freezed.dart';
@@ -15,11 +21,9 @@ class LoginPageState with _$LoginPageState {
     String? emailFiledErrorText,
     String? passFiledErrorText,
     Account? loginAccount,
-    dynamic successSignIn,
-    dynamic successGetAccountData,
+    UserCredential? loginUserCredential,
 		// 初期値
     @Default(false) bool isLoading,
-    @Default(true) bool existEmptyFiled,
   }) = _LoginPageState;
 }
 
@@ -27,20 +31,53 @@ class LoginPageState with _$LoginPageState {
 class LoginPageStateController extends StateNotifier<LoginPageState>{
   LoginPageStateController(LoginPageState state) : super(state);
 
-  Future<dynamic>authenticationSignIn()async {
-    final canSingIn = await Authentication().signIn(state.emailFiledController.text, state.passFiledController.text);
-    state = state.copyWith(successSignIn: canSingIn);
+
+  void changeIsLoading(){
+    state = state.copyWith(isLoading:!state.isLoading);
+  }
+  void initializeErrorText(){
+    state = state.copyWith(passFiledErrorText: null,emailFiledErrorText: null);
   }
 
-  void checkControllerText(){
+  Future<FirebaseException?>authenticationSignIn()async {
+    final _resultAuth = await Authentication().signIn(state.emailFiledController.text, state.passFiledController.text);
+    if(_resultAuth is UserCredential){
+      state = state.copyWith(loginUserCredential: _resultAuth);
+      return null;
+    }
+    if(_resultAuth is FirebaseException){//エラー時
+      return _resultAuth;
+    }
+    return FirebaseException(plugin: "エラー発生");
+  }
+
+  bool checkTextFiledError(){
     if(state.passFiledController.text.isEmpty){
       state = state.copyWith(passFiledErrorText: "パスワードが入力されていません");
     }
     if(state.emailFiledController.text.isEmpty){
       state = state.copyWith(emailFiledErrorText: "メールアドレスが入力されていません");
     }
+
     if(state.emailFiledErrorText == null && state.passFiledErrorText == null){//全ての欄が埋まっていた時
-      state = state.copyWith(existEmptyFiled: false);
+      return false;
+    }else{//エラーがあったとき
+      return true;
     }
+  }
+  Future<FirebaseException?>getAccountData()async{
+    if(state.loginUserCredential == null){
+      return FirebaseException(plugin: "SingInされていません");
+    }
+    final _result = await FirestoreRepository().getAccountDataFromFirestore(state.loginUserCredential!.user!.uid);
+    if(_result is Account){
+      state = state.copyWith(loginAccount: _result);
+      return null;
+    }
+    if(_result is FirebaseException){//エラーが起こったとき
+      return _result;
+    }
+
+    return FirebaseException(plugin: "エラー発生");
   }
 }
