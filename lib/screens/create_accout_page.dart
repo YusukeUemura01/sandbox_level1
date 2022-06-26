@@ -87,6 +87,7 @@ class CreateAccountPage extends HookConsumerWidget {
                     ElevatedButton(
                       onPressed: () async {
                         final controller = ref.read(createAccountPageProvider.notifier);
+                        final utils = FunctionUtils();
                         controller.changeIsLoading();//サークルインジェクターを出す
                         controller.initializeErrorText(); //エラーテキスト初期化
                         final existEmptyField = controller.checkControllerText();//空欄がないかチェック
@@ -95,31 +96,34 @@ class CreateAccountPage extends HookConsumerWidget {
                           return;
                         }
 
-                        final canAuthenticationSingUp = await controller.authenticationSignUp();//signup
-                        if(canAuthenticationSingUp is FirebaseException){//エラーがかえってきたときエラーダイアログを出す
+                        final singUpErrorException = await controller.authenticationSignUp();//signup
+                        if(singUpErrorException != null){//エラーがかえってきたときエラーダイアログを出す
                           controller.changeIsLoading();
-                          showErrorDialog(context,canAuthenticationSingUp);//エラーダイアログ
-                          return;
-                        }
-                        final canAuthenticationSingIn = await controller.authenticationSignIn();//作ったアカウントでsignin
-                        if(canAuthenticationSingIn is FirebaseException){//エラーがかえってきたときエラーダイアログを出す
-                          controller.changeIsLoading();
-                          showErrorDialog(context,canAuthenticationSingIn);//エラーダイアログ
+                          utils.showErrorDialog(context,singUpErrorException);//エラーダイアログ
                           return;
                         }
 
-                        final canUploadIconImage = await controller.upLoadIconImage();//iconImageをアップロード
-                        if(canUploadIconImage is FirebaseException){//エラーがかえってきたときエラーダイアログを出す
+                        final singInErrorException = await controller.authenticationSignIn();//作ったアカウントでsignin
+                        if(singInErrorException != null){//エラーがかえってきたときエラーダイアログを出す
                           controller.changeIsLoading();
-                          showErrorDialog(context,canUploadIconImage);//エラーダイアログ
+                          utils.showErrorDialog(context,singInErrorException);//エラーダイアログ
                           return;
                         }
-                        final canSaveOnFirestore = await controller.setAccountData();
-                        if(canSaveOnFirestore is FirebaseException){//エラーがかえってきたときエラーダイアログを出す
+
+                        final uploadIconImageErrorException = await controller.upLoadIconImage();//iconImageをアップロード
+                        if(uploadIconImageErrorException != null){//エラーがかえってきたときエラーダイアログを出す
                           controller.changeIsLoading();
-                          showErrorDialog(context,canSaveOnFirestore);//エラーダイアログ
+                          utils.showErrorDialog(context,uploadIconImageErrorException);//エラーダイアログ
                           return;
                         }
+
+                        final setAccountErrorException = await controller.setAccountData();
+                        if(setAccountErrorException != null){//エラーがかえってきたときエラーダイアログを出す
+                          controller.changeIsLoading();
+                          utils.showErrorDialog(context,setAccountErrorException);//エラーダイアログ
+                          return;
+                        }
+
                         controller.changeIsLoading();
                         Navigator.of(context).pushReplacement(
                           MaterialPageRoute(
@@ -146,28 +150,6 @@ class CreateAccountPage extends HookConsumerWidget {
           ],
         ),
       ),
-    );
-  }
-
-
-  void showErrorDialog(BuildContext context,FirebaseException errorException) {
-    showDialog<void>(
-        context: context,
-        barrierDismissible: false, // user must tap button!
-        builder: (_) {
-          return AlertDialog(
-            title: const Text("エラーが発生しました"),
-            content: Text("$errorException"),
-            actions: [
-              TextButton(
-                child: const Text('戻る'),
-                onPressed: (){
-                  Navigator.of(context).pop();
-                },
-              ),
-            ],
-          );
-        }
     );
   }
 }

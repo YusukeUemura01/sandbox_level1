@@ -19,7 +19,7 @@ const _uuid = Uuid();
 class CreateAccountPageState with _$CreateAccountPageState {
   factory CreateAccountPageState({
     File? iconImage,
-    UserCredential? newAccountAuth,
+    UserCredential? newUserCredential,
     String? nameErrorText,
     String? emailErrorText,
     String? passErrorText,
@@ -60,40 +60,42 @@ class CreateAccountPageStateController extends StateNotifier<CreateAccountPageSt
       return true;
     }
   }
-  Future<dynamic>authenticationSignUp()async {
-    final newAccountAuth = await Authentication().signUp(state.emailController.text, state.passController.text);
-    if(newAccountAuth is UserCredential){
-      state = state.copyWith(newAccountAuth: newAccountAuth);
-      return true;
-    }else{
+  Future<FirebaseException?>authenticationSignUp()async {
+    final _resultSignUp = await Authentication().signUp(state.emailController.text, state.passController.text);
+    if(_resultSignUp is UserCredential){//auth成功した時
+      state = state.copyWith(newUserCredential: _resultSignUp);
+      return null;
+    }
+    if(_resultSignUp is FirebaseException){//auth失敗した時
       print("Authエラー");
-      return newAccountAuth;//エラー文を返す
+      return _resultSignUp;
     }
+    return null;
   }
-  Future<dynamic>authenticationSignIn()async {
-    final canSingIn = await Authentication().signIn(state.emailController.text, state.passController.text);
-    return canSingIn;
+  Future<FirebaseException?>authenticationSignIn()async {
+    final _singInException = await Authentication().signIn(state.emailController.text, state.passController.text);
+    return _singInException;
   }
-  Future<dynamic>upLoadIconImage()async{
-    if(state.iconImage == null)return true;//アイコンが選択されていない時アップロードしない
+  Future<FirebaseException?>upLoadIconImage()async{
+    if(state.iconImage == null)return null;//アイコンが選択されていない時アップロードしない
     try{
-      final _imagePath = await FunctionUtils().upLoadImage(state.newAccountAuth!.user!.uid, state.iconImage!);//iconをアップロード
+      final _imagePath = await FunctionUtils().upLoadImage(state.newUserCredential!.user!.uid, state.iconImage!);//iconをアップロード
       state = state.copyWith(imagePath: _imagePath);
-      return true;
-    }on FirebaseException catch(e){
-      print("iconImageアップロードエラー$e");
-      return e;
+      return null;
+    }on FirebaseException catch(exception){
+      print("iconImageアップロードエラー$exception");
+      return exception;
     }
   }
-  Future<dynamic>setAccountData()async{
+  Future<FirebaseException?>setAccountData()async{
     final _newAccount = Account(
         id: _uuid.v4(),
         userName: state.nameController.text,
         imagePath: state.imagePath,
         updateTime: DateTime.now()
     );
-    final _canUploadData = await FirestoreRepository().setAccountData(_newAccount);//firestoreに保存
+    final _setAccountDataException = await FirestoreRepository().setAccountData(_newAccount);//firestoreに保存
     FirestoreRepository().setCurrentLoginAccount(_newAccount);//FirestoreRepositoryに保存
-    return _canUploadData;
+    return _setAccountDataException;
   }
 }

@@ -7,11 +7,11 @@ class FirestoreRepository{
   late Account currentLoginAccount;
 
 
-  Future<dynamic> setAccountData(Account _newAccount)async{//user情報をfirestoreにセット
+  Future<FirebaseException?> setAccountData(Account _newAccount)async{//user情報をfirestoreにセット
     final newAccountToJson = _newAccount.toJson();
     try{
       await _fireStoreInstance.collection("users").doc(_newAccount.id).set(newAccountToJson);
-      return true;
+      return null;
     }on FirebaseException catch(e){
       return e;
     }
