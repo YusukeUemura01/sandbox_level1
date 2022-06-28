@@ -22,6 +22,7 @@ class NavigationPage extends HookConsumerWidget {
   Widget build(BuildContext context,WidgetRef ref) {
     final state = ref.watch(navigationPageProvider);
     return Scaffold(
+      body: state.pageList[state.bottomNavigationIndex],
       bottomNavigationBar: BottomNavigationBar(
           currentIndex: state.bottomNavigationIndex,
           onTap: (value){
