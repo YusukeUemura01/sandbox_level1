@@ -10,6 +10,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:sandbox_level1/Firebase/auth_repository.dart';
 import 'package:flutter/material.dart';
 import 'package:sandbox_level1/Firebase/firestore_repository.dart';
+import 'package:sandbox_level1/utils/function_utils.dart';
 
 import '../model/account.dart';
 part 'loginpage_controller.freezed.dart';
@@ -69,15 +70,9 @@ class LoginPageStateController extends StateNotifier<LoginPageState>{
     if(state.loginUserCredential == null){
       return FirebaseException(plugin: "SingInされていません");
     }
-    final _result = await FirestoreRepository().getAccountDataFromFirestore(state.loginUserCredential!.user!.uid);
-    if(_result is Account){
-      state = state.copyWith(loginAccount: _result);
-      return null;
-    }
-    if(_result is FirebaseException){//エラーが起こったとき
-      return _result;
-    }
-
-    return FirebaseException(plugin: "エラー発生");
+    final _loginAccount = await FirestoreRepository().getAccountData(state.loginUserCredential!.user!.uid);
+    state = state.copyWith(loginAccount: _loginAccount);
+    FirestoreRepository().setCurrentLoginAccount(_loginAccount);
+    return null;
   }
 }

@@ -89,7 +89,7 @@ class CreateAccountPageStateController extends StateNotifier<CreateAccountPageSt
         imagePath: state.imagePath,
         updateTime: DateTime.now()
     );
-    final _setAccountDataException = await FirestoreRepository().setAccountDataOnFirestore(_newAccount);//firestoreに保存
+    final _setAccountDataException = await FirestoreRepository().setAccountData(_newAccount);//firestoreに保存
     FirestoreRepository().setCurrentLoginAccount(_newAccount);//FirestoreRepositoryに保存
     return _setAccountDataException;
   }

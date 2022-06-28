@@ -10,7 +10,7 @@ class FirestoreRepository{
     currentLoginAccount = account.copyWith();
   }
 
-  Future<FirebaseException?> setAccountDataOnFirestore(Account _newAccount)async{//user情報をfirestoreにセット
+  Future<FirebaseException?> setAccountData(Account _newAccount)async{//user情報をfirestoreにセット
     final newAccountToJson = _newAccount.toJson();
     try{
       await _fireStoreInstance.collection("users").doc(_newAccount.id).set(newAccountToJson);
@@ -19,16 +19,11 @@ class FirestoreRepository{
       return e;
     }
   }
-  Future<dynamic> getAccountDataFromFirestore(String id)async{//user情報をfirestoreにセット
-    try{
+  Future<Account> getAccountData(String id)async{//user情報をfirestoreにセット
       print(id);
       DocumentSnapshot documentSnapshot = await _fireStoreInstance.collection("users").doc(id).get();
       Map<String,dynamic> data = documentSnapshot.data() as Map<String,dynamic>;
       Account loginAccount = Account.fromJson(data);
-
       return loginAccount;
-    }on FirebaseException catch(e){
-      return e;
-    }
   }
 }
