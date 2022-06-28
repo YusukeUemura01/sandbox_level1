@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:sandbox_level1/screens/create_accout_page.dart';
 import 'package:sandbox_level1/screens/login_page.dart';
+import 'package:sandbox_level1/screens/navigation_page.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -30,7 +31,7 @@ class MyApp extends StatelessWidget {
         // is not restarted.
         primarySwatch: Colors.blue,
       ),
-      home: LoginPage()
+      home: NavigationPage(),//LoginPage()
     );
   }
 }
