@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:sandbox_level1/screens/create_accout_page.dart';
 import 'package:sandbox_level1/screens/mychatpage.dart';
+import 'package:sandbox_level1/screens/navigation_page.dart';
 import 'package:sandbox_level1/utils/function_utils.dart';
 import 'package:sandbox_level1/view_model/loginpage_controller.dart';
 
@@ -17,7 +18,7 @@ final loginPageProvider = StateNotifierProvider<
 });
 
 class LoginPage extends HookConsumerWidget{
-  LoginPage({Key? key}) : super(key: key);
+  const LoginPage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context,WidgetRef ref) {
@@ -102,7 +103,7 @@ class LoginPage extends HookConsumerWidget{
                       Navigator.of(context).pushReplacement(
                         MaterialPageRoute(
                           builder: (context) {
-                            return MyChatPage();
+                            return NavigationPage();
                           },
                         ),
                       );
