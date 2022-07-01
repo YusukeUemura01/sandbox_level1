@@ -2,6 +2,8 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:sandbox_level1/model/account.dart';
+import 'package:sandbox_level1/model/message.dart';
+import 'package:sandbox_level1/model/talk_room.dart';
 
 class FirestoreRepository{
   final _fireStoreInstance = FirebaseFirestore.instance;
@@ -37,5 +39,25 @@ class FirestoreRepository{
       userList.add(_account);
     }
     return userList;
+  }
+  Future<String?> getTalkRoomID(Account _otherAccount)async {
+    final myId = FirebaseAuth.instance.currentUser!.uid;
+    final otherAccountId = _otherAccount.id;
+    final QuerySnapshot _snapshot = await _fireStoreInstance.collection("talk_room").where("userIDs",arrayContains: [myId,otherAccountId]).get();
+    if(_snapshot.size == 0)return null;
+    final data = _snapshot.docs[0].data() as Map<String,dynamic>;
+    TalkRoom _talkRoom = TalkRoom.fromJson(data);
+    return _talkRoom.id;
+  }
+  Future<List<Message>> fetchMessageList(String id)async{//idをもとにメッセージをとってくる
+    final QuerySnapshot _snapshot = await _fireStoreInstance.collection("talk_room").doc(id).collection("message").get();
+    List<Message> list = [];
+    for(int index = 0;index < _snapshot.docs.length;index++){
+      final data = _snapshot.docs[index].data() as Map<String,dynamic>;
+      Message _message = Message.fromJson(data);
+      list.add(_message);
+    }
+    return list;
+
   }
 }
