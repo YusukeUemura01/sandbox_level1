@@ -12,7 +12,7 @@ part 'talk_room.g.dart';
 class TalkRoom with _$TalkRoom {
   factory TalkRoom({
     required String id,
-    required List<Account> userIDs,
+    required List<String> userIDs,
     @DateTimeTimestampConverter() required DateTime updateTime,
   }) = _TalkRoom;
 

@@ -8,9 +8,8 @@ part of 'talk_room.dart';
 
 _$_TalkRoom _$$_TalkRoomFromJson(Map<String, dynamic> json) => _$_TalkRoom(
       id: json['id'] as String,
-      userIDs: (json['userIDs'] as List<dynamic>)
-          .map((e) => Account.fromJson(e as Map<String, dynamic>))
-          .toList(),
+      userIDs:
+          (json['userIDs'] as List<dynamic>).map((e) => e as String).toList(),
       updateTime: const DateTimeTimestampConverter()
           .fromJson(json['updateTime'] as Timestamp),
     );

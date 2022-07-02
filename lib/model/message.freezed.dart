@@ -21,7 +21,7 @@ Message _$MessageFromJson(Map<String, dynamic> json) {
 /// @nodoc
 mixin _$Message {
   String get content => throw _privateConstructorUsedError;
-  Account get sendAccount => throw _privateConstructorUsedError;
+  String get sendAccountID => throw _privateConstructorUsedError;
   @DateTimeTimestampConverter()
   DateTime get sendTime => throw _privateConstructorUsedError;
 
@@ -36,10 +36,8 @@ abstract class $MessageCopyWith<$Res> {
       _$MessageCopyWithImpl<$Res>;
   $Res call(
       {String content,
-      Account sendAccount,
+      String sendAccountID,
       @DateTimeTimestampConverter() DateTime sendTime});
-
-  $AccountCopyWith<$Res> get sendAccount;
 }
 
 /// @nodoc
@@ -53,7 +51,7 @@ class _$MessageCopyWithImpl<$Res> implements $MessageCopyWith<$Res> {
   @override
   $Res call({
     Object? content = freezed,
-    Object? sendAccount = freezed,
+    Object? sendAccountID = freezed,
     Object? sendTime = freezed,
   }) {
     return _then(_value.copyWith(
@@ -61,22 +59,15 @@ class _$MessageCopyWithImpl<$Res> implements $MessageCopyWith<$Res> {
           ? _value.content
           : content // ignore: cast_nullable_to_non_nullable
               as String,
-      sendAccount: sendAccount == freezed
-          ? _value.sendAccount
-          : sendAccount // ignore: cast_nullable_to_non_nullable
-              as Account,
+      sendAccountID: sendAccountID == freezed
+          ? _value.sendAccountID
+          : sendAccountID // ignore: cast_nullable_to_non_nullable
+              as String,
       sendTime: sendTime == freezed
           ? _value.sendTime
           : sendTime // ignore: cast_nullable_to_non_nullable
               as DateTime,
     ));
-  }
-
-  @override
-  $AccountCopyWith<$Res> get sendAccount {
-    return $AccountCopyWith<$Res>(_value.sendAccount, (value) {
-      return _then(_value.copyWith(sendAccount: value));
-    });
   }
 }
 
@@ -88,11 +79,8 @@ abstract class _$$_MessageCopyWith<$Res> implements $MessageCopyWith<$Res> {
   @override
   $Res call(
       {String content,
-      Account sendAccount,
+      String sendAccountID,
       @DateTimeTimestampConverter() DateTime sendTime});
-
-  @override
-  $AccountCopyWith<$Res> get sendAccount;
 }
 
 /// @nodoc
@@ -107,7 +95,7 @@ class __$$_MessageCopyWithImpl<$Res> extends _$MessageCopyWithImpl<$Res>
   @override
   $Res call({
     Object? content = freezed,
-    Object? sendAccount = freezed,
+    Object? sendAccountID = freezed,
     Object? sendTime = freezed,
   }) {
     return _then(_$_Message(
@@ -115,10 +103,10 @@ class __$$_MessageCopyWithImpl<$Res> extends _$MessageCopyWithImpl<$Res>
           ? _value.content
           : content // ignore: cast_nullable_to_non_nullable
               as String,
-      sendAccount: sendAccount == freezed
-          ? _value.sendAccount
-          : sendAccount // ignore: cast_nullable_to_non_nullable
-              as Account,
+      sendAccountID: sendAccountID == freezed
+          ? _value.sendAccountID
+          : sendAccountID // ignore: cast_nullable_to_non_nullable
+              as String,
       sendTime: sendTime == freezed
           ? _value.sendTime
           : sendTime // ignore: cast_nullable_to_non_nullable
@@ -132,7 +120,7 @@ class __$$_MessageCopyWithImpl<$Res> extends _$MessageCopyWithImpl<$Res>
 class _$_Message with DiagnosticableTreeMixin implements _Message {
   _$_Message(
       {required this.content,
-      required this.sendAccount,
+      required this.sendAccountID,
       @DateTimeTimestampConverter() required this.sendTime});
 
   factory _$_Message.fromJson(Map<String, dynamic> json) =>
@@ -141,14 +129,14 @@ class _$_Message with DiagnosticableTreeMixin implements _Message {
   @override
   final String content;
   @override
-  final Account sendAccount;
+  final String sendAccountID;
   @override
   @DateTimeTimestampConverter()
   final DateTime sendTime;
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'Message(content: $content, sendAccount: $sendAccount, sendTime: $sendTime)';
+    return 'Message(content: $content, sendAccountID: $sendAccountID, sendTime: $sendTime)';
   }
 
   @override
@@ -157,7 +145,7 @@ class _$_Message with DiagnosticableTreeMixin implements _Message {
     properties
       ..add(DiagnosticsProperty('type', 'Message'))
       ..add(DiagnosticsProperty('content', content))
-      ..add(DiagnosticsProperty('sendAccount', sendAccount))
+      ..add(DiagnosticsProperty('sendAccountID', sendAccountID))
       ..add(DiagnosticsProperty('sendTime', sendTime));
   }
 
@@ -168,7 +156,7 @@ class _$_Message with DiagnosticableTreeMixin implements _Message {
             other is _$_Message &&
             const DeepCollectionEquality().equals(other.content, content) &&
             const DeepCollectionEquality()
-                .equals(other.sendAccount, sendAccount) &&
+                .equals(other.sendAccountID, sendAccountID) &&
             const DeepCollectionEquality().equals(other.sendTime, sendTime));
   }
 
@@ -177,7 +165,7 @@ class _$_Message with DiagnosticableTreeMixin implements _Message {
   int get hashCode => Object.hash(
       runtimeType,
       const DeepCollectionEquality().hash(content),
-      const DeepCollectionEquality().hash(sendAccount),
+      const DeepCollectionEquality().hash(sendAccountID),
       const DeepCollectionEquality().hash(sendTime));
 
   @JsonKey(ignore: true)
@@ -194,7 +182,7 @@ class _$_Message with DiagnosticableTreeMixin implements _Message {
 abstract class _Message implements Message {
   factory _Message(
           {required final String content,
-          required final Account sendAccount,
+          required final String sendAccountID,
           @DateTimeTimestampConverter() required final DateTime sendTime}) =
       _$_Message;
 
@@ -203,7 +191,7 @@ abstract class _Message implements Message {
   @override
   String get content => throw _privateConstructorUsedError;
   @override
-  Account get sendAccount => throw _privateConstructorUsedError;
+  String get sendAccountID => throw _privateConstructorUsedError;
   @override
   @DateTimeTimestampConverter()
   DateTime get sendTime => throw _privateConstructorUsedError;

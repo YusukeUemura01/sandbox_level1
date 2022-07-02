@@ -8,8 +8,7 @@ part of 'message.dart';
 
 _$_Message _$$_MessageFromJson(Map<String, dynamic> json) => _$_Message(
       content: json['content'] as String,
-      sendAccount:
-          Account.fromJson(json['sendAccount'] as Map<String, dynamic>),
+      sendAccountID: json['sendAccountID'] as String,
       sendTime: const DateTimeTimestampConverter()
           .fromJson(json['sendTime'] as Timestamp),
     );
@@ -17,6 +16,6 @@ _$_Message _$$_MessageFromJson(Map<String, dynamic> json) => _$_Message(
 Map<String, dynamic> _$$_MessageToJson(_$_Message instance) =>
     <String, dynamic>{
       'content': instance.content,
-      'sendAccount': instance.sendAccount,
+      'sendAccountID': instance.sendAccountID,
       'sendTime': const DateTimeTimestampConverter().toJson(instance.sendTime),
     };

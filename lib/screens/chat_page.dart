@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:intl/intl.dart'as intl;
 import 'package:sandbox_level1/model/account.dart';
 import 'package:sandbox_level1/view_model/chat_page_controller.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
@@ -23,7 +24,8 @@ class ChatPage extends HookConsumerWidget{
     final chatPageState = ref.watch(chatPageStateProvider);
     useEffect((){
       final controller = ref.read(chatPageStateProvider.notifier);
-      controller.getTalkRoomInfo(otherAccount);//
+      controller.getTalkRoomInfo(otherAccount);
+      return null;//
     },const []);
 
     return Scaffold(
@@ -34,30 +36,30 @@ class ChatPage extends HookConsumerWidget{
             Padding(
               padding: const EdgeInsets.only(bottom: 110),
               child: ListView.builder(
-                  itemCount: 15,
+                  itemCount: chatPageState.messageList.length,
                   reverse: true,
                   physics: const RangeMaintainingScrollPhysics(),
                   shrinkWrap: true,
                   itemBuilder: (context,index){
                     return Padding(
-                      padding: const EdgeInsets.symmetric(vertical: 10,horizontal: 10),
+                      padding: const EdgeInsets.symmetric(vertical: 20,horizontal: 10),
                       child: Row(
                         crossAxisAlignment: CrossAxisAlignment.end,
-                        textDirection: index % 2 == 0 ? TextDirection.ltr : TextDirection.rtl,
+                        textDirection: chatPageState.messageList[index].sendAccountID == myAccount.id ? TextDirection.ltr : TextDirection.rtl,
                         children: [
                           Container(
                               constraints: BoxConstraints(maxWidth: MediaQuery.of(context).size.width*0.6),
                               decoration: BoxDecoration(
-                                color: index % 2 == 0 ? Colors.grey:Colors.blue,
-                                borderRadius: BorderRadius.circular(10),
+                                color: chatPageState.messageList[index].sendAccountID == myAccount.id ? Colors.grey:Colors.blue,
+                                borderRadius: BorderRadius.circular(15),
                               ),
                               child: Padding(
                                 padding: const EdgeInsets.all(8.0),
-                                child: Center(child: Text("あいうえおあいうえおあいうえおあいうえお")),
+                                child: Center(child: Text(chatPageState.messageList[index].content)),
                               )
                           ),
                           const SizedBox(width: 7),
-                          Text("16:10",style: TextStyle(fontSize: 13),),
+                          Text(intl.DateFormat("MMM d HH:mm").format(chatPageState.messageList[index].sendTime),style: TextStyle(fontSize: 13),),
                         ],
                       ),
                     );
@@ -86,8 +88,13 @@ class ChatPage extends HookConsumerWidget{
                         ),
                       )),
                       IconButton(
-                          onPressed: (){
-
+                          onPressed: ()async{
+                            final controller = ref.read(chatPageStateProvider.notifier);
+                            if(chatPageState.chatRoomId == null){//トークルームが存在しないときトークルームを作る
+                              await controller.createChatRoom(myAccount, otherAccount);
+                            }
+                            await controller.addMessage(myAccount);
+                            controller.clearAddMessageFiled();
                           },
                           icon: const Icon(Icons.send),
                       ),

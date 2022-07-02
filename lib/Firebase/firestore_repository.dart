@@ -23,7 +23,7 @@ class FirestoreRepository{
     }
   }
   Future<Account> getAccountData(String id)async{//自分のuser情報をfirestoreからとってくる
-      print(id);
+      print("アカウントid $id");
       DocumentSnapshot documentSnapshot = await _fireStoreInstance.collection("users").doc(id).get();
       Map<String,dynamic> data = documentSnapshot.data() as Map<String,dynamic>;
       Account loginAccount = Account.fromJson(data);
@@ -43,14 +43,19 @@ class FirestoreRepository{
   Future<String?> getTalkRoomID(Account _otherAccount)async {
     final myId = FirebaseAuth.instance.currentUser!.uid;
     final otherAccountId = _otherAccount.id;
-    final QuerySnapshot _snapshot = await _fireStoreInstance.collection("talk_room").where("userIDs",arrayContains: [myId,otherAccountId]).get();
-    if(_snapshot.size == 0)return null;
+    List userIDList = [myId,otherAccountId];
+    userIDList.sort((a, b) => a.compareTo(b));//ソートしてidの順番を決めておく
+    final QuerySnapshot _snapshot = await _fireStoreInstance.collection("talk_room").where("userIDs",isEqualTo: userIDList).get();
+
+    if(_snapshot.size == 0)return null;//トークルームが作られていない場合
+
     final data = _snapshot.docs[0].data() as Map<String,dynamic>;
     TalkRoom _talkRoom = TalkRoom.fromJson(data);
+    print("talkroomId ${_talkRoom.id}");
     return _talkRoom.id;
   }
   Future<List<Message>> fetchMessageList(String id)async{//idをもとにメッセージをとってくる
-    final QuerySnapshot _snapshot = await _fireStoreInstance.collection("talk_room").doc(id).collection("message").get();
+    final QuerySnapshot _snapshot = await _fireStoreInstance.collection("talk_room").doc(id).collection("message").orderBy("sendTime",descending: true).get();
     List<Message> list = [];
     for(int index = 0;index < _snapshot.docs.length;index++){
       final data = _snapshot.docs[index].data() as Map<String,dynamic>;
@@ -59,5 +64,28 @@ class FirestoreRepository{
     }
     return list;
 
+  }
+  Future<Message>addMessage(String talkRoomId,String content,Account sendAccount)async {
+
+    final _newDoc =  _fireStoreInstance.collection("talk_room").doc(talkRoomId).collection("message").doc().id;
+    Message newMessage = Message(
+        content: content,
+        sendAccountID: sendAccount.id,
+        sendTime: DateTime.now(),
+    );
+    await _fireStoreInstance.collection("talk_room").doc(talkRoomId).collection("message").doc(_newDoc).set(newMessage.toJson());
+    return newMessage;
+  }
+  Future<String>createTalkRoom(Account myAccount,Account otherAccount)async{
+    List<String> _userList = [myAccount.id,otherAccount.id];
+    _userList.sort((a, b) => a.compareTo(b));//ソートしてidの順番を決めておく
+    final _newDoc = _fireStoreInstance.collection("talk_room").doc().id;
+    TalkRoom newChatroom = TalkRoom(
+        id: _newDoc,
+        userIDs:_userList,
+        updateTime: DateTime.now()
+    );
+    await _fireStoreInstance.collection("talk_room").doc(_newDoc).set(newChatroom.toJson());//talk_roomの方に保存
+    return _newDoc;//TODO ここまで
   }
 }

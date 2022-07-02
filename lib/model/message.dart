@@ -10,7 +10,7 @@ part 'message.g.dart';
 class Message with _$Message {
   factory Message({
     required String content,
-    required Account sendAccount,
+    required String sendAccountID,
     @DateTimeTimestampConverter() required DateTime sendTime,
 		// 初期値
   }) = _Message;

@@ -21,7 +21,7 @@ TalkRoom _$TalkRoomFromJson(Map<String, dynamic> json) {
 /// @nodoc
 mixin _$TalkRoom {
   String get id => throw _privateConstructorUsedError;
-  List<Account> get userIDs => throw _privateConstructorUsedError;
+  List<String> get userIDs => throw _privateConstructorUsedError;
   @DateTimeTimestampConverter()
   DateTime get updateTime => throw _privateConstructorUsedError;
 
@@ -37,7 +37,7 @@ abstract class $TalkRoomCopyWith<$Res> {
       _$TalkRoomCopyWithImpl<$Res>;
   $Res call(
       {String id,
-      List<Account> userIDs,
+      List<String> userIDs,
       @DateTimeTimestampConverter() DateTime updateTime});
 }
 
@@ -63,7 +63,7 @@ class _$TalkRoomCopyWithImpl<$Res> implements $TalkRoomCopyWith<$Res> {
       userIDs: userIDs == freezed
           ? _value.userIDs
           : userIDs // ignore: cast_nullable_to_non_nullable
-              as List<Account>,
+              as List<String>,
       updateTime: updateTime == freezed
           ? _value.updateTime
           : updateTime // ignore: cast_nullable_to_non_nullable
@@ -80,7 +80,7 @@ abstract class _$$_TalkRoomCopyWith<$Res> implements $TalkRoomCopyWith<$Res> {
   @override
   $Res call(
       {String id,
-      List<Account> userIDs,
+      List<String> userIDs,
       @DateTimeTimestampConverter() DateTime updateTime});
 }
 
@@ -108,7 +108,7 @@ class __$$_TalkRoomCopyWithImpl<$Res> extends _$TalkRoomCopyWithImpl<$Res>
       userIDs: userIDs == freezed
           ? _value._userIDs
           : userIDs // ignore: cast_nullable_to_non_nullable
-              as List<Account>,
+              as List<String>,
       updateTime: updateTime == freezed
           ? _value.updateTime
           : updateTime // ignore: cast_nullable_to_non_nullable
@@ -122,7 +122,7 @@ class __$$_TalkRoomCopyWithImpl<$Res> extends _$TalkRoomCopyWithImpl<$Res>
 class _$_TalkRoom with DiagnosticableTreeMixin implements _TalkRoom {
   _$_TalkRoom(
       {required this.id,
-      required final List<Account> userIDs,
+      required final List<String> userIDs,
       @DateTimeTimestampConverter() required this.updateTime})
       : _userIDs = userIDs;
 
@@ -131,9 +131,9 @@ class _$_TalkRoom with DiagnosticableTreeMixin implements _TalkRoom {
 
   @override
   final String id;
-  final List<Account> _userIDs;
+  final List<String> _userIDs;
   @override
-  List<Account> get userIDs {
+  List<String> get userIDs {
     // ignore: implicit_dynamic_type
     return EqualUnmodifiableListView(_userIDs);
   }
@@ -190,7 +190,7 @@ class _$_TalkRoom with DiagnosticableTreeMixin implements _TalkRoom {
 abstract class _TalkRoom implements TalkRoom {
   factory _TalkRoom(
           {required final String id,
-          required final List<Account> userIDs,
+          required final List<String> userIDs,
           @DateTimeTimestampConverter() required final DateTime updateTime}) =
       _$_TalkRoom;
 
@@ -199,7 +199,7 @@ abstract class _TalkRoom implements TalkRoom {
   @override
   String get id => throw _privateConstructorUsedError;
   @override
-  List<Account> get userIDs => throw _privateConstructorUsedError;
+  List<String> get userIDs => throw _privateConstructorUsedError;
   @override
   @DateTimeTimestampConverter()
   DateTime get updateTime => throw _privateConstructorUsedError;
