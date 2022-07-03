@@ -17,7 +17,7 @@ final chatPageStateProvider = StateNotifierProvider<
 
 const styleSomebody = BubbleStyle(
   nip: BubbleNip.rightBottom,
-  color: Colors.white,
+  color: Color.fromARGB(255, 225, 255, 199),
   borderColor: Colors.blue,
   borderWidth: 1,
   elevation: 4,
@@ -27,7 +27,7 @@ const styleSomebody = BubbleStyle(
 
 const styleMe = BubbleStyle(
   nip: BubbleNip.leftBottom,
-  color: Color.fromARGB(255, 225, 255, 199),
+  color: Colors.white,
   borderColor: Colors.blue,
   borderWidth: 1,
   elevation: 4,

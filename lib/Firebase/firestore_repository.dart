@@ -54,17 +54,6 @@ class FirestoreRepository{
     print("talkroomId ${_talkRoom.id}");
     return _talkRoom.id;
   }
-  Future<List<Message>> fetchMessageList(String id)async{//idをもとにメッセージをとってくる
-    final QuerySnapshot _snapshot = await _fireStoreInstance.collection("talk_room").doc(id).collection("message").orderBy("sendTime",descending: true).get();
-    List<Message> list = [];
-    for(int index = 0;index < _snapshot.docs.length;index++){
-      final data = _snapshot.docs[index].data() as Map<String,dynamic>;
-      Message _message = Message.fromJson(data);
-      list.add(_message);
-    }
-    return list;
-
-  }
   Future<Message>addMessage(String talkRoomId,String content,Account sendAccount)async {
 
     final _newDoc =  _fireStoreInstance.collection("talk_room").doc(talkRoomId).collection("message").doc().id;
