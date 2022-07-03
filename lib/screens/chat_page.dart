@@ -1,3 +1,4 @@
+import 'package:bubble/bubble.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:intl/intl.dart'as intl;
@@ -13,6 +14,26 @@ final chatPageStateProvider = StateNotifierProvider<
 
   ));
 });
+
+const styleSomebody = BubbleStyle(
+  nip: BubbleNip.rightBottom,
+  color: Colors.white,
+  borderColor: Colors.blue,
+  borderWidth: 1,
+  elevation: 4,
+  margin: BubbleEdges.only(top: 8, right: 10),
+  alignment: Alignment.topRight
+);
+
+const styleMe = BubbleStyle(
+  nip: BubbleNip.leftBottom,
+  color: Color.fromARGB(255, 225, 255, 199),
+  borderColor: Colors.blue,
+  borderWidth: 1,
+  elevation: 4,
+  margin: BubbleEdges.only(top: 8, left: 10),
+  alignment: Alignment.topLeft
+);
 
 class ChatPage extends HookConsumerWidget{
   final Account myAccount;
@@ -47,19 +68,20 @@ class ChatPage extends HookConsumerWidget{
                         crossAxisAlignment: CrossAxisAlignment.end,
                         textDirection: chatPageState.messageList[index].sendAccountID == myAccount.id ? TextDirection.ltr : TextDirection.rtl,
                         children: [
-                          Container(
-                              constraints: BoxConstraints(maxWidth: MediaQuery.of(context).size.width*0.6),
-                              decoration: BoxDecoration(
-                                color: chatPageState.messageList[index].sendAccountID == myAccount.id ? Colors.grey:Colors.blue,
-                                borderRadius: BorderRadius.circular(15),
-                              ),
-                              child: Padding(
-                                padding: const EdgeInsets.all(8.0),
-                                child: Center(child: Text(chatPageState.messageList[index].content)),
-                              )
+                          CircleAvatar(
+                            backgroundImage: chatPageState.messageList[index].sendAccountID == myAccount.id
+                                ? NetworkImage(myAccount.imagePath)
+                                : NetworkImage(otherAccount.imagePath)
+                          ),
+                          Bubble(
+                            child: Container(
+                                child: Text(chatPageState.messageList[index].content),
+                                constraints: BoxConstraints(maxWidth: MediaQuery.of(context).size.width*0.5),
+                            ),
+                            style: chatPageState.messageList[index].sendAccountID == myAccount.id ? styleMe : styleSomebody
                           ),
                           const SizedBox(width: 7),
-                          Text(intl.DateFormat("MMM d HH:mm").format(chatPageState.messageList[index].sendTime),style: TextStyle(fontSize: 13),),
+                          Text(intl.DateFormat("MMM d HH:mm").format(chatPageState.messageList[index].sendTime),style: const TextStyle(fontSize: 13),),
                         ],
                       ),
                     );
