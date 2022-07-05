@@ -46,8 +46,8 @@ class ChatPageController extends StateNotifier<ChatPageState>{
 
 
   Future<void> fetchMessageList(String id) async {
-    //idをもとにメッセージをとってくる
-      final messageList = await fireStoreRepo.fetchMessageList(id);
+
+      final messageList = await fireStoreRepo.fetchMessageList(id);//idをもとにリアルタイムにメッセージを更新
       state = state.copyWith(messageList: messageList);
     }
 
