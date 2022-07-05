@@ -101,8 +101,15 @@ class FirestoreRepository{
 
 
 
-  Stream<QuerySnapshot> fetchMessageList(String id){//idをもとにメッセージをとってくる
-    final Stream<QuerySnapshot>messageStream = _fireStoreInstance.collection("talk_room").doc(id).collection("message").orderBy("sendTime",descending: true).snapshots();
-    return messageStream;
+  Stream<List<Message>> fetchMessageList(String id){//idをもとにメッセージをとってくる
+    final Stream<QuerySnapshot> messageStream = _fireStoreInstance.collection("talk_room").doc(id).collection("message").orderBy("sendTime",descending: true).snapshots();
+    Stream<List<Message>> stream = messageStream.map((QuerySnapshot snapshot) {
+      return snapshot.docs.map((DocumentSnapshot document){
+        Map<String,dynamic> data = document.data() as Map<String,dynamic>;
+        Message message = Message.fromJson(data);
+        return message;
+      }).toList();
+    });
+    return stream;
   }
 }

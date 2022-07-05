@@ -22,11 +22,11 @@ class UserListPage extends HookConsumerWidget {
       WidgetsBinding.instance.addPostFrameCallback((_) {
         _controller.getLoginAccount();//自分のアカウント情報をfetchしていなければとってくる
       });
-
       if(state.allUserList.isNotEmpty)return;
       _controller.fetchUserList();//全ユーザーのアカウント情報をとってくる
       return null;
     },const []);
+
     return Scaffold(
       appBar: AppBar(
         title: const Text("ユーザー 一覧"),

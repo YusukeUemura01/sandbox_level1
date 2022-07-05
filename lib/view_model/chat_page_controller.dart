@@ -35,6 +35,7 @@ class ChatPageController extends StateNotifier<ChatPageState>{
   Future<void>getTalkRoomInfo(Account _otherAccount) async {//トークルームidとメッセージリストを取得してくる
     final id = await fireStoreRepo.getTalkRoomID(_otherAccount);//id取得
     state = state.copyWith(chatRoomId: id);
+
     if(id == null){//トークルームidが存在しない時、メッセージリストを空っぽにしておく
       state = state.copyWith(messageList: []);
       print("talkRoomIdなし");
@@ -46,17 +47,12 @@ class ChatPageController extends StateNotifier<ChatPageState>{
 
 
 
-  Future<void> fetchMessageList(String id) async {
+  Future<void> fetchMessageList(String id) async {//メッセージをリアルタイムで更新
 
-    final Stream<QuerySnapshot>messageStream = fireStoreRepo.fetchMessageList(id);//s
-    await for(QuerySnapshot snapshot in messageStream){
-      final List<Message>messageList = snapshot.docs.map((DocumentSnapshot document){
-        Map<String,dynamic> data = document.data() as Map<String,dynamic>;
-        Message message = Message.fromJson(data);
-        return message;
-      }).toList();
+    Stream<List<Message>> messageListStream = fireStoreRepo.fetchMessageList(id);
+    messageListStream.listen((messageList) {
       state = state.copyWith(messageList: messageList);
-    }
+    });
   }
 
 
