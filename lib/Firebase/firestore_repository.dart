@@ -43,10 +43,10 @@ class FirestoreRepository{
 
   Future<List<Account>> fetchUserAccountList() async {
     final String _myId = FirebaseAuth.instance.currentUser!.uid;
-    final _snapshot = await _fireStoreInstance.collection("users").where("id",isNotEqualTo: _myId).get();//自分以外のユーザをとってくる
+    final snapshot = await _fireStoreInstance.collection("users").where("id",isNotEqualTo: _myId).get();//自分以外のユーザをとってくる
     List<Account> userList = [];
-    for(int index = 0;index < _snapshot.docs.length;index++){
-      final data = _snapshot.docs[index].data();
+    for(int index = 0;index < snapshot.docs.length;index++){
+      final data = snapshot.docs[index].data();
       Account _account = Account.fromJson(data);
       userList.add(_account);
     }
@@ -87,12 +87,12 @@ class FirestoreRepository{
 
 
   Future<String>createTalkRoom(Account myAccount,Account otherAccount) async {
-    List<String> _userList = [myAccount.id,otherAccount.id];
-    _userList.sort((a, b) => a.compareTo(b));//ソートしてidの順番を決めておく
+    List<String> userList = [myAccount.id,otherAccount.id];
+    userList.sort((a, b) => a.compareTo(b));//ソートしてidの順番を決めておく
     final newDoc = _fireStoreInstance.collection("talk_room").doc().id;
     TalkRoom newChatroom = TalkRoom(
         id: newDoc,
-        userIDs:_userList,
+        userIDs:userList,
         updateTime: DateTime.now()
     );
     await _fireStoreInstance.collection("talk_room").doc(newDoc).set(newChatroom.toJson());//talk_roomの方に保存
