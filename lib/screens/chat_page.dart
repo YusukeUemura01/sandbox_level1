@@ -15,6 +15,9 @@ final chatPageStateProvider = StateNotifierProvider<
   ));
 });
 
+
+
+
 const styleSomebody = BubbleStyle(
   nip: BubbleNip.rightBottom,
   color: Color.fromARGB(255, 225, 255, 199),
@@ -24,6 +27,7 @@ const styleSomebody = BubbleStyle(
   margin: BubbleEdges.only(top: 8, right: 10),
   alignment: Alignment.topRight
 );
+
 
 const styleMe = BubbleStyle(
   nip: BubbleNip.leftBottom,
@@ -35,6 +39,9 @@ const styleMe = BubbleStyle(
   alignment: Alignment.topLeft
 );
 
+
+
+
 class ChatPage extends HookConsumerWidget{
   final Account myAccount;
   final Account otherAccount;
@@ -45,12 +52,21 @@ class ChatPage extends HookConsumerWidget{
     final chatPageState = ref.watch(chatPageStateProvider);
     useEffect((){
       final controller = ref.read(chatPageStateProvider.notifier);
-      controller.getTalkRoomInfo(otherAccount);
-      return null;//
+      controller.getTalkRoomInfo(otherAccount);//トークルームidとメッセージリストをとってくる
+      return null;
     },const []);
 
     return Scaffold(
-      appBar: AppBar(),
+      appBar: AppBar(
+        leading: IconButton(
+          icon: const Icon(Icons.arrow_back),
+          onPressed: () {
+            final controller = ref.read(chatPageStateProvider.notifier);
+            controller.initializedMessageList();//画面を閉じる時にメッセージリストを初期化しておく
+            Navigator.pop(context);
+          },
+        ),
+      ),
       body: SafeArea(
         child: Stack(
           children: [
@@ -92,7 +108,7 @@ class ChatPage extends HookConsumerWidget{
               alignment: Alignment.bottomCenter,
               child: Padding(
                 padding: const EdgeInsets.all(8.0),
-                child: Container(
+                child: SizedBox(
                   height: 100,
                   child: Row(
                     children: [
@@ -110,13 +126,15 @@ class ChatPage extends HookConsumerWidget{
                         ),
                       )),
                       IconButton(
-                          onPressed: ()async{
+                          onPressed: () async {
                             final controller = ref.read(chatPageStateProvider.notifier);
+
                             if(chatPageState.chatRoomId == null){//トークルームが存在しないときトークルームを作る
                               await controller.createChatRoom(myAccount, otherAccount);
                             }
-                            await controller.addMessage(myAccount);
-                            controller.clearAddMessageFiled();
+
+                            await controller.addMessage(myAccount);//メッセージ追加
+                            controller.clearAddMessageFiled();//メッセージ追加できたらtextFieldを初期化
                           },
                           icon: const Icon(Icons.send),
                       ),

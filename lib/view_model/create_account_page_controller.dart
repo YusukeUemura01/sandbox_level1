@@ -33,16 +33,27 @@ class CreateAccountPageState with _$CreateAccountPageState {
 
 class CreateAccountPageStateController extends StateNotifier<CreateAccountPageState>{
   CreateAccountPageStateController(CreateAccountPageState state) : super(state);
+
+
   void changeIsLoading(){
     state = state.copyWith(isLoading:!state.isLoading);
   }
-  Future<void> getImageAndChangeIconImage()async{
+
+
+
+  Future<void> getImageAndChangeIconImage() async {
     final pickedFile = await FunctionUtils().getImageGallery();
     state = state.copyWith(iconImage: File(pickedFile.path));
   }
+
+
+
   void initializeErrorText(){
     state = state.copyWith(nameErrorText: null,passErrorText: null,emailErrorText: null);
   }
+
+
+
   bool checkTextFiledError(){
     if(state.nameController.text.isEmpty){
       state = state.copyWith(nameErrorText: "名前が入力されていません");
@@ -59,7 +70,10 @@ class CreateAccountPageStateController extends StateNotifier<CreateAccountPageSt
       return true;
     }
   }
-  Future<FirebaseException?>authenticationSignUp()async {
+
+
+
+  Future<FirebaseException?>authenticationSignUp() async {
     final _resultSignUp = await Authentication().signUp(state.emailController.text, state.passController.text);
     if(_resultSignUp is UserCredential){//auth成功した時
       state = state.copyWith(newUserCredential: _resultSignUp);
@@ -71,7 +85,10 @@ class CreateAccountPageStateController extends StateNotifier<CreateAccountPageSt
     }
     return FirebaseException(plugin: "エラー");
   }
-  Future<FirebaseException?>upLoadIconImage()async{
+
+
+
+  Future<FirebaseException?>upLoadIconImage() async {
     if(state.iconImage == null)return null;//アイコンが選択されていない時アップロードしない
     try{
       final _imagePath = await FunctionUtils().upLoadImage(state.newUserCredential!.user!.uid, state.iconImage!);//iconをアップロード
@@ -82,7 +99,10 @@ class CreateAccountPageStateController extends StateNotifier<CreateAccountPageSt
       return exception;
     }
   }
-  Future<FirebaseException?>setAccountData()async{
+
+
+
+  Future<FirebaseException?>setAccountData() async {
     final _newAccount = Account(
         id: state.newUserCredential!.user!.uid,
         userName: state.nameController.text,

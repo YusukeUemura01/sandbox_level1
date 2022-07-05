@@ -33,10 +33,10 @@ dependencies:
   firebase_auth: ^3.3.20
   image_picker: ^0.8.5+3
   firebase_storage: ^10.2.18
-  hooks_riverpod: ^1.0.3
+  hooks_riverpod: ^1.0.4
   uuid: ^3.0.6
   firebase_core: ^1.18.0
-  flutter_hooks: ^0.18.3
+  flutter_hooks: ^0.18.5+1
   intl: any
   bubble: ^1.2.1
 

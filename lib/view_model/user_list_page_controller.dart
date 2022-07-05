@@ -1,6 +1,5 @@
 
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/material.dart';
 
 import 'package:flutter/foundation.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
@@ -20,14 +19,18 @@ class UserListPageState with _$UserListPageState{
 
 class UserListPageStateController extends StateNotifier<UserListPageState>{
   UserListPageStateController(UserListPageState state) : super(state);
+
   final fireStoreRepo = FirestoreRepository();
 
-  void fetchUserList()async{//自分以外の全ユーザをとってくる
+
+  void fetchUserList() async {//自分以外の全ユーザをとってくる
     final _userList = await fireStoreRepo.fetchUserAccountList();
     state = state.copyWith(allUserList: _userList);
   }
 
-  void getLoginAccount()async{
+
+
+  void getLoginAccount() async {
     if(fireStoreRepo.currentLoginAccount != null){//すでに自分のアカウント情報を取得していたら
       state = state.copyWith(myAccount: fireStoreRepo.currentLoginAccount);
       return;

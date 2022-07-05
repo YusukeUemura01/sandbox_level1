@@ -17,7 +17,6 @@ final _privateConstructorUsedError = UnsupportedError(
 /// @nodoc
 mixin _$NavigationPageState {
   int get bottomNavigationIndex => throw _privateConstructorUsedError;
-  List<Widget> get pageList => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
   $NavigationPageStateCopyWith<NavigationPageState> get copyWith =>
@@ -29,7 +28,7 @@ abstract class $NavigationPageStateCopyWith<$Res> {
   factory $NavigationPageStateCopyWith(
           NavigationPageState value, $Res Function(NavigationPageState) then) =
       _$NavigationPageStateCopyWithImpl<$Res>;
-  $Res call({int bottomNavigationIndex, List<Widget> pageList});
+  $Res call({int bottomNavigationIndex});
 }
 
 /// @nodoc
@@ -44,17 +43,12 @@ class _$NavigationPageStateCopyWithImpl<$Res>
   @override
   $Res call({
     Object? bottomNavigationIndex = freezed,
-    Object? pageList = freezed,
   }) {
     return _then(_value.copyWith(
       bottomNavigationIndex: bottomNavigationIndex == freezed
           ? _value.bottomNavigationIndex
           : bottomNavigationIndex // ignore: cast_nullable_to_non_nullable
               as int,
-      pageList: pageList == freezed
-          ? _value.pageList
-          : pageList // ignore: cast_nullable_to_non_nullable
-              as List<Widget>,
     ));
   }
 }
@@ -66,7 +60,7 @@ abstract class _$$_NavigationPageStateCopyWith<$Res>
           $Res Function(_$_NavigationPageState) then) =
       __$$_NavigationPageStateCopyWithImpl<$Res>;
   @override
-  $Res call({int bottomNavigationIndex, List<Widget> pageList});
+  $Res call({int bottomNavigationIndex});
 }
 
 /// @nodoc
@@ -83,17 +77,12 @@ class __$$_NavigationPageStateCopyWithImpl<$Res>
   @override
   $Res call({
     Object? bottomNavigationIndex = freezed,
-    Object? pageList = freezed,
   }) {
     return _then(_$_NavigationPageState(
       bottomNavigationIndex: bottomNavigationIndex == freezed
           ? _value.bottomNavigationIndex
           : bottomNavigationIndex // ignore: cast_nullable_to_non_nullable
               as int,
-      pageList: pageList == freezed
-          ? _value._pageList
-          : pageList // ignore: cast_nullable_to_non_nullable
-              as List<Widget>,
     ));
   }
 }
@@ -103,23 +92,14 @@ class __$$_NavigationPageStateCopyWithImpl<$Res>
 class _$_NavigationPageState
     with DiagnosticableTreeMixin
     implements _NavigationPageState {
-  _$_NavigationPageState(
-      {required this.bottomNavigationIndex,
-      required final List<Widget> pageList})
-      : _pageList = pageList;
+  _$_NavigationPageState({required this.bottomNavigationIndex});
 
   @override
   final int bottomNavigationIndex;
-  final List<Widget> _pageList;
-  @override
-  List<Widget> get pageList {
-    // ignore: implicit_dynamic_type
-    return EqualUnmodifiableListView(_pageList);
-  }
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'NavigationPageState(bottomNavigationIndex: $bottomNavigationIndex, pageList: $pageList)';
+    return 'NavigationPageState(bottomNavigationIndex: $bottomNavigationIndex)';
   }
 
   @override
@@ -127,8 +107,8 @@ class _$_NavigationPageState
     super.debugFillProperties(properties);
     properties
       ..add(DiagnosticsProperty('type', 'NavigationPageState'))
-      ..add(DiagnosticsProperty('bottomNavigationIndex', bottomNavigationIndex))
-      ..add(DiagnosticsProperty('pageList', pageList));
+      ..add(
+          DiagnosticsProperty('bottomNavigationIndex', bottomNavigationIndex));
   }
 
   @override
@@ -137,15 +117,12 @@ class _$_NavigationPageState
         (other.runtimeType == runtimeType &&
             other is _$_NavigationPageState &&
             const DeepCollectionEquality()
-                .equals(other.bottomNavigationIndex, bottomNavigationIndex) &&
-            const DeepCollectionEquality().equals(other._pageList, _pageList));
+                .equals(other.bottomNavigationIndex, bottomNavigationIndex));
   }
 
   @override
   int get hashCode => Object.hash(
-      runtimeType,
-      const DeepCollectionEquality().hash(bottomNavigationIndex),
-      const DeepCollectionEquality().hash(_pageList));
+      runtimeType, const DeepCollectionEquality().hash(bottomNavigationIndex));
 
   @JsonKey(ignore: true)
   @override
@@ -155,14 +132,11 @@ class _$_NavigationPageState
 }
 
 abstract class _NavigationPageState implements NavigationPageState {
-  factory _NavigationPageState(
-      {required final int bottomNavigationIndex,
-      required final List<Widget> pageList}) = _$_NavigationPageState;
+  factory _NavigationPageState({required final int bottomNavigationIndex}) =
+      _$_NavigationPageState;
 
   @override
   int get bottomNavigationIndex => throw _privateConstructorUsedError;
-  @override
-  List<Widget> get pageList => throw _privateConstructorUsedError;
   @override
   @JsonKey(ignore: true)
   _$$_NavigationPageStateCopyWith<_$_NavigationPageState> get copyWith =>

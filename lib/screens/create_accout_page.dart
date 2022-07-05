@@ -1,10 +1,7 @@
-import 'dart:io';
 
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:sandbox_level1/Firebase/auth_repository.dart';
-import 'package:sandbox_level1/screens/mychatpage.dart';
+import 'package:sandbox_level1/screens/navigation_page.dart';
 import 'package:sandbox_level1/utils/function_utils.dart';
 import 'package:sandbox_level1/view_model/create_account_page_controller.dart';
 
@@ -18,7 +15,7 @@ final createAccountPageProvider = StateNotifierProvider<
 });
 
 class CreateAccountPage extends HookConsumerWidget {
-  CreateAccountPage({Key? key}) : super(key: key);
+  const CreateAccountPage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -122,7 +119,7 @@ class CreateAccountPage extends HookConsumerWidget {
                         Navigator.of(context).pushReplacement(
                           MaterialPageRoute(
                             builder: (context) {
-                              return MyChatPage();
+                              return const NavigationPage();
                             },
                           ),
                         );

@@ -1,7 +1,6 @@
 
 
 
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
@@ -10,7 +9,6 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:sandbox_level1/Firebase/auth_repository.dart';
 import 'package:flutter/material.dart';
 import 'package:sandbox_level1/Firebase/firestore_repository.dart';
-import 'package:sandbox_level1/utils/function_utils.dart';
 
 import '../model/account.dart';
 part 'loginpage_controller.freezed.dart';
@@ -36,11 +34,16 @@ class LoginPageStateController extends StateNotifier<LoginPageState>{
   void changeIsLoading(){
     state = state.copyWith(isLoading:!state.isLoading);
   }
+
+
+
   void initializeErrorText(){
     state = state.copyWith(passFiledErrorText: null,emailFiledErrorText: null);
   }
 
-  Future<FirebaseException?>authenticationSignIn()async {
+
+
+  Future<FirebaseException?>authenticationSignIn() async {
     final _resultAuth = await Authentication().signIn(state.emailFiledController.text, state.passFiledController.text);
     if(_resultAuth is UserCredential){
       state = state.copyWith(loginUserCredential: _resultAuth);
@@ -51,6 +54,8 @@ class LoginPageStateController extends StateNotifier<LoginPageState>{
     }
     return FirebaseException(plugin: "エラー発生");
   }
+
+
 
   bool checkTextFiledError(){
     if(state.passFiledController.text.isEmpty){
@@ -66,7 +71,10 @@ class LoginPageStateController extends StateNotifier<LoginPageState>{
       return true;
     }
   }
-  Future<FirebaseException?>getAccountData()async{
+
+
+
+  Future<FirebaseException?>getAccountData() async {
     if(state.loginUserCredential == null){
       return FirebaseException(plugin: "SingInされていません");
     }

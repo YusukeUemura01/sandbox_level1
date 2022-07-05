@@ -19,7 +19,7 @@ class UserListPage extends HookConsumerWidget {
     final state = ref.watch(userListPageProvider);
     useEffect((){
       final _controller = ref.read(userListPageProvider.notifier);
-      WidgetsBinding.instance!.addPostFrameCallback((_) {
+      WidgetsBinding.instance.addPostFrameCallback((_) {
         _controller.getLoginAccount();//自分のアカウント情報をfetchしていなければとってくる
       });
 

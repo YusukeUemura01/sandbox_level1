@@ -1,9 +1,7 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:sandbox_level1/screens/create_accout_page.dart';
-import 'package:sandbox_level1/screens/mychatpage.dart';
 import 'package:sandbox_level1/screens/navigation_page.dart';
 import 'package:sandbox_level1/utils/function_utils.dart';
 import 'package:sandbox_level1/view_model/loginpage_controller.dart';
@@ -68,7 +66,7 @@ class LoginPage extends HookConsumerWidget{
                             TextSpan(
                               text: "こちら",
                               recognizer: TapGestureRecognizer()..onTap=(){
-                                Navigator.push(context, MaterialPageRoute(builder: (context) => CreateAccountPage()));
+                                Navigator.push(context, MaterialPageRoute(builder: (context) => const CreateAccountPage()));
                               },
                               style: const TextStyle(
                                 color: Colors.blue,
@@ -77,33 +75,41 @@ class LoginPage extends HookConsumerWidget{
                           ]
                       ),
                     ),
-                    ElevatedButton(onPressed: ()async{
+                    ElevatedButton(onPressed: () async {
                       final controller = ref.read(loginPageProvider.notifier);
                       final FunctionUtils utils = FunctionUtils();
                       controller.initializeErrorText();
                       controller.changeIsLoading();
+
                       final _existEmptyFiled = controller.checkTextFiledError();//空欄がいないかをチェック
+
                       if(_existEmptyFiled){
                         controller.changeIsLoading();
                         return;
                       }
+
+
                       final _signInErrorException = await controller.authenticationSignIn();//サイイン
                       if(_signInErrorException != null){
                         controller.changeIsLoading();
                         utils.showErrorDialog(context,_signInErrorException);//エラーダイアログ
                         return;
                       }
+
+
                       final _getAccountDataErrorException = await controller.getAccountData();//Account情報とってくる
                       if(_getAccountDataErrorException != null){
                         controller.changeIsLoading();
                         utils.showErrorDialog(context,_getAccountDataErrorException);//エラーダイアログ
                         return;
                       }
+
                       controller.changeIsLoading();
+
                       Navigator.of(context).pushReplacement(
                         MaterialPageRoute(
                           builder: (context) {
-                            return NavigationPage();
+                            return const NavigationPage();
                           },
                         ),
                       );
