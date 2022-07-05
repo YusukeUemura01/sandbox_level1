@@ -101,17 +101,8 @@ class FirestoreRepository{
 
 
 
-  Future<List<Message>> fetchMessageList(String id)async{//idをもとにメッセージをとってくる
+  Stream<QuerySnapshot> fetchMessageList(String id){//idをもとにメッセージをとってくる
     final Stream<QuerySnapshot>messageStream = _fireStoreInstance.collection("talk_room").doc(id).collection("message").orderBy("sendTime",descending: true).snapshots();
-    List<Message> messageList =[];
-    await for(QuerySnapshot snapshot in messageStream){
-      messageList = snapshot.docs.map((DocumentSnapshot document){
-        Map<String,dynamic> data = document.data() as Map<String,dynamic>;
-        Message message = Message.fromJson(data);
-        return message;
-      }).toList();
-      return messageList;
-    }
-    return messageList;
+    return messageStream;
   }
 }

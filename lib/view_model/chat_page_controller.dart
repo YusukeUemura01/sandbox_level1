@@ -1,4 +1,5 @@
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
@@ -47,9 +48,16 @@ class ChatPageController extends StateNotifier<ChatPageState>{
 
   Future<void> fetchMessageList(String id) async {
 
-      final messageList = await fireStoreRepo.fetchMessageList(id);//idをもとにリアルタイムにメッセージを更新
+    final Stream<QuerySnapshot>messageStream = fireStoreRepo.fetchMessageList(id);//s
+    await for(QuerySnapshot snapshot in messageStream){
+      final List<Message>messageList = snapshot.docs.map((DocumentSnapshot document){
+        Map<String,dynamic> data = document.data() as Map<String,dynamic>;
+        Message message = Message.fromJson(data);
+        return message;
+      }).toList();
       state = state.copyWith(messageList: messageList);
     }
+  }
 
 
 
