@@ -58,6 +58,7 @@ class ChatPage extends HookConsumerWidget{
 
     return Scaffold(
       appBar: AppBar(
+        title: Text(otherAccount.userName),
         leading: IconButton(
           icon: const Icon(Icons.arrow_back),
           onPressed: () {

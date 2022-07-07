@@ -36,7 +36,7 @@ class NavigationPage extends HookConsumerWidget {
           items: const [
             BottomNavigationBarItem(
               icon: Icon(Icons.home),
-              label: "ユーザ",
+              label: "ユーザー",
             ),
             BottomNavigationBarItem(
               icon: Icon(Icons.chat),
