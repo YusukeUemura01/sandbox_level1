@@ -1,4 +1,6 @@
 
+import 'dart:async';
+
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
@@ -13,7 +15,7 @@ class ChatPageState with _$ChatPageState{
     @Default([]) List<Message> messageList,
     required TextEditingController newMessageController,
     String? chatRoomId,
-		// 初期値
+    StreamSubscription<List<Message>>? messageListener,
   }) = _ChatPageState;
 }
 
@@ -28,31 +30,35 @@ class ChatPageController extends StateNotifier<ChatPageState>{
 
   void initializedMessageList(){//メッセージリストを初期化する
     state = state.copyWith(messageList: []);
+    if(state.messageListener != null){
+      state.messageListener!.cancel();//メッセージのリッスンをキャンセル
+    }
   }
 
 
   Future<void>getTalkRoomInfo(Account myAccount,Account otherAccount) async {//トークルームidとメッセージリストを取得してくる
-    final id = await fireStoreRepo.getTalkRoomID(otherAccount);//id取得
+    final id = await fireStoreRepo.fetchTalkRoomID(otherAccount);//id取得
     state = state.copyWith(chatRoomId: id);
 
     if(id == null){//トークルームidが存在しない時、
       await createChatRoom(myAccount, otherAccount);
-      fetchMessageList(state.chatRoomId!);
+      listenMessageList(state.chatRoomId!);
       return;
     }
 
-    await fetchMessageList(id);////トークルームidが存在するとき、メッセージ取得
+    await listenMessageList(id);////トークルームidが存在するとき、メッセージ取得
   }
 
 
 
 
-  Future<void> fetchMessageList(String id) async {//メッセージをリアルタイムで更新
+  Future<void> listenMessageList(String id) async {//メッセージをリアルタイムで更新
 
     Stream<List<Message>> messageListStream = fireStoreRepo.fetchMessageList(id);
-    messageListStream.listen((messageList) {
+    final messageListener = messageListStream.listen((messageList) {
       state = state.copyWith(messageList: messageList);
     });
+    state = state.copyWith(messageListener: messageListener);
   }
 
 

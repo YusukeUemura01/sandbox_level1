@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:sandbox_level1/Firebase/firestore_repository.dart';
 
 import '../view_model/my_chat_list_page_controller.dart';
 

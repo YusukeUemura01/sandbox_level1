@@ -2,7 +2,6 @@ import 'package:bubble/bubble.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:intl/intl.dart'as intl;
-import 'package:sandbox_level1/Firebase/firestore_repository.dart';
 import 'package:sandbox_level1/model/account.dart';
 import 'package:sandbox_level1/view_model/chat_page_controller.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';

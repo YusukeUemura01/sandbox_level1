@@ -31,7 +31,7 @@ class FirestoreRepository{
 
 
 
-  Future<Account> getAccountData(String id) async {//自分のuser情報をfirestoreからとってくる
+  Future<Account> fetchAccountData(String id) async {//自分のuser情報をfirestoreからとってくる
       print("アカウントid $id");
       DocumentSnapshot documentSnapshot = await _fireStoreInstance.collection("users").doc(id).get();
       Map<String,dynamic> data = documentSnapshot.data() as Map<String,dynamic>;
@@ -55,7 +55,7 @@ class FirestoreRepository{
 
 
 
-  Future<String?> getTalkRoomID(Account otherAccount) async {//ユーザー一覧ページで相手のアカウント情報からトークルームIDを取得するメソッド
+  Future<String?> fetchTalkRoomID(Account otherAccount) async {//ユーザー一覧ページで相手のアカウント情報からトークルームIDを取得するメソッド
     final myId = FirebaseAuth.instance.currentUser!.uid;
     final otherAccountId = otherAccount.id;
     List userIDList = [myId,otherAccountId];

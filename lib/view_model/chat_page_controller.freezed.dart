@@ -20,6 +20,8 @@ mixin _$ChatPageState {
   TextEditingController get newMessageController =>
       throw _privateConstructorUsedError;
   String? get chatRoomId => throw _privateConstructorUsedError;
+  StreamSubscription<List<Message>>? get messageListener =>
+      throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
   $ChatPageStateCopyWith<ChatPageState> get copyWith =>
@@ -34,7 +36,8 @@ abstract class $ChatPageStateCopyWith<$Res> {
   $Res call(
       {List<Message> messageList,
       TextEditingController newMessageController,
-      String? chatRoomId});
+      String? chatRoomId,
+      StreamSubscription<List<Message>>? messageListener});
 }
 
 /// @nodoc
@@ -51,6 +54,7 @@ class _$ChatPageStateCopyWithImpl<$Res>
     Object? messageList = freezed,
     Object? newMessageController = freezed,
     Object? chatRoomId = freezed,
+    Object? messageListener = freezed,
   }) {
     return _then(_value.copyWith(
       messageList: messageList == freezed
@@ -65,6 +69,10 @@ class _$ChatPageStateCopyWithImpl<$Res>
           ? _value.chatRoomId
           : chatRoomId // ignore: cast_nullable_to_non_nullable
               as String?,
+      messageListener: messageListener == freezed
+          ? _value.messageListener
+          : messageListener // ignore: cast_nullable_to_non_nullable
+              as StreamSubscription<List<Message>>?,
     ));
   }
 }
@@ -79,7 +87,8 @@ abstract class _$$_ChatPageStateCopyWith<$Res>
   $Res call(
       {List<Message> messageList,
       TextEditingController newMessageController,
-      String? chatRoomId});
+      String? chatRoomId,
+      StreamSubscription<List<Message>>? messageListener});
 }
 
 /// @nodoc
@@ -98,6 +107,7 @@ class __$$_ChatPageStateCopyWithImpl<$Res>
     Object? messageList = freezed,
     Object? newMessageController = freezed,
     Object? chatRoomId = freezed,
+    Object? messageListener = freezed,
   }) {
     return _then(_$_ChatPageState(
       messageList: messageList == freezed
@@ -112,6 +122,10 @@ class __$$_ChatPageStateCopyWithImpl<$Res>
           ? _value.chatRoomId
           : chatRoomId // ignore: cast_nullable_to_non_nullable
               as String?,
+      messageListener: messageListener == freezed
+          ? _value.messageListener
+          : messageListener // ignore: cast_nullable_to_non_nullable
+              as StreamSubscription<List<Message>>?,
     ));
   }
 }
@@ -122,7 +136,8 @@ class _$_ChatPageState with DiagnosticableTreeMixin implements _ChatPageState {
   _$_ChatPageState(
       {final List<Message> messageList = const [],
       required this.newMessageController,
-      this.chatRoomId})
+      this.chatRoomId,
+      this.messageListener})
       : _messageList = messageList;
 
   final List<Message> _messageList;
@@ -137,10 +152,12 @@ class _$_ChatPageState with DiagnosticableTreeMixin implements _ChatPageState {
   final TextEditingController newMessageController;
   @override
   final String? chatRoomId;
+  @override
+  final StreamSubscription<List<Message>>? messageListener;
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'ChatPageState(messageList: $messageList, newMessageController: $newMessageController, chatRoomId: $chatRoomId)';
+    return 'ChatPageState(messageList: $messageList, newMessageController: $newMessageController, chatRoomId: $chatRoomId, messageListener: $messageListener)';
   }
 
   @override
@@ -150,7 +167,8 @@ class _$_ChatPageState with DiagnosticableTreeMixin implements _ChatPageState {
       ..add(DiagnosticsProperty('type', 'ChatPageState'))
       ..add(DiagnosticsProperty('messageList', messageList))
       ..add(DiagnosticsProperty('newMessageController', newMessageController))
-      ..add(DiagnosticsProperty('chatRoomId', chatRoomId));
+      ..add(DiagnosticsProperty('chatRoomId', chatRoomId))
+      ..add(DiagnosticsProperty('messageListener', messageListener));
   }
 
   @override
@@ -163,7 +181,9 @@ class _$_ChatPageState with DiagnosticableTreeMixin implements _ChatPageState {
             const DeepCollectionEquality()
                 .equals(other.newMessageController, newMessageController) &&
             const DeepCollectionEquality()
-                .equals(other.chatRoomId, chatRoomId));
+                .equals(other.chatRoomId, chatRoomId) &&
+            const DeepCollectionEquality()
+                .equals(other.messageListener, messageListener));
   }
 
   @override
@@ -171,7 +191,8 @@ class _$_ChatPageState with DiagnosticableTreeMixin implements _ChatPageState {
       runtimeType,
       const DeepCollectionEquality().hash(_messageList),
       const DeepCollectionEquality().hash(newMessageController),
-      const DeepCollectionEquality().hash(chatRoomId));
+      const DeepCollectionEquality().hash(chatRoomId),
+      const DeepCollectionEquality().hash(messageListener));
 
   @JsonKey(ignore: true)
   @override
@@ -181,9 +202,11 @@ class _$_ChatPageState with DiagnosticableTreeMixin implements _ChatPageState {
 
 abstract class _ChatPageState implements ChatPageState {
   factory _ChatPageState(
-      {final List<Message> messageList,
-      required final TextEditingController newMessageController,
-      final String? chatRoomId}) = _$_ChatPageState;
+          {final List<Message> messageList,
+          required final TextEditingController newMessageController,
+          final String? chatRoomId,
+          final StreamSubscription<List<Message>>? messageListener}) =
+      _$_ChatPageState;
 
   @override
   List<Message> get messageList => throw _privateConstructorUsedError;
@@ -192,6 +215,9 @@ abstract class _ChatPageState implements ChatPageState {
       throw _privateConstructorUsedError;
   @override
   String? get chatRoomId => throw _privateConstructorUsedError;
+  @override
+  StreamSubscription<List<Message>>? get messageListener =>
+      throw _privateConstructorUsedError;
   @override
   @JsonKey(ignore: true)
   _$$_ChatPageStateCopyWith<_$_ChatPageState> get copyWith =>

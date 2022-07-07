@@ -31,7 +31,7 @@ class MyChatListPageController extends StateNotifier<MyChatListPageState>{
       state = state.copyWith(myAccount: fireStoreRepo.currentLoginAccount);
       return;
     }
-    final loginAccount = await fireStoreRepo.getAccountData(FirebaseAuth.instance.currentUser!.uid);
+    final loginAccount = await fireStoreRepo.fetchAccountData(FirebaseAuth.instance.currentUser!.uid);
     fireStoreRepo.setCurrentLoginAccount(loginAccount);
     state = state.copyWith(myAccount: loginAccount);
   }
