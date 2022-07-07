@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:sandbox_level1/Firebase/firestore_repository.dart';
 import 'package:sandbox_level1/screens/chat_page.dart';
 import 'package:sandbox_level1/view_model/user_list_page_controller.dart';
 
@@ -18,12 +19,14 @@ class UserListPage extends HookConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final state = ref.watch(userListPageProvider);
     useEffect((){
-      final _controller = ref.read(userListPageProvider.notifier);
+      final controller = ref.read(userListPageProvider.notifier);
+
       WidgetsBinding.instance.addPostFrameCallback((_) {
-        _controller.getLoginAccount();//自分のアカウント情報をfetchしていなければとってくる
+        controller.setLoginAccount();//自分のアカウントをセットする。自分のアカウント情報をfetchしていなければとってくる
       });
+      
       if(state.allUserList.isNotEmpty)return;
-      _controller.fetchUserList();//全ユーザーのアカウント情報をとってくる
+      controller.fetchUserList();//全ユーザーのアカウント情報をとってくる
       return null;
     },const []);
 

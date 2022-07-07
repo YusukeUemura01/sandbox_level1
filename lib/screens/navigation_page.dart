@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:sandbox_level1/screens/my_profile_page.dart';
-import 'package:sandbox_level1/screens/mychatpage.dart';
+import 'package:sandbox_level1/screens/my_chat_list_page.dart';
 import 'package:sandbox_level1/screens/user_list_page.dart';
 import 'package:sandbox_level1/view_model/navigation_page_controller.dart';
 
@@ -18,7 +18,7 @@ class NavigationPage extends HookConsumerWidget {
 
   const NavigationPage({Key? key}) : super(key: key);
 
-  static const List <Widget> pageList = [UserListPage(),MyChatPage(),MyProfilePage()];
+  static const List <Widget> pageList = [UserListPage(),MyChatListPage(),MyProfilePage()];
 
 
   @override

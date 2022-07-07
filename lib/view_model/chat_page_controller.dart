@@ -1,5 +1,4 @@
 
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
@@ -32,15 +31,16 @@ class ChatPageController extends StateNotifier<ChatPageState>{
   }
 
 
-  Future<void>getTalkRoomInfo(Account _otherAccount) async {//トークルームidとメッセージリストを取得してくる
-    final id = await fireStoreRepo.getTalkRoomID(_otherAccount);//id取得
+  Future<void>getTalkRoomInfo(Account myAccount,Account otherAccount) async {//トークルームidとメッセージリストを取得してくる
+    final id = await fireStoreRepo.getTalkRoomID(otherAccount);//id取得
     state = state.copyWith(chatRoomId: id);
 
-    if(id == null){//トークルームidが存在しない時、メッセージリストを空っぽにしておく
-      state = state.copyWith(messageList: []);
-      print("talkRoomIdなし");
+    if(id == null){//トークルームidが存在しない時、
+      await createChatRoom(myAccount, otherAccount);
+      fetchMessageList(state.chatRoomId!);
       return;
     }
+
     await fetchMessageList(id);////トークルームidが存在するとき、メッセージ取得
   }
 

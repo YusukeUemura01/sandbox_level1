@@ -41,7 +41,7 @@ class FirestoreRepository{
 
 
 
-  Future<List<Account>> fetchUserAccountList() async {
+  Future<List<Account>> fetchUserAccountList() async {//ユーザー一覧ページでユーザーリストをとってくるメソッド
     final String _myId = FirebaseAuth.instance.currentUser!.uid;
     final snapshot = await _fireStoreInstance.collection("users").where("id",isNotEqualTo: _myId).get();//自分以外のユーザをとってくる
     List<Account> userList = [];
@@ -55,7 +55,7 @@ class FirestoreRepository{
 
 
 
-  Future<String?> getTalkRoomID(Account otherAccount) async {
+  Future<String?> getTalkRoomID(Account otherAccount) async {//ユーザー一覧ページで相手のアカウント情報からトークルームIDを取得するメソッド
     final myId = FirebaseAuth.instance.currentUser!.uid;
     final otherAccountId = otherAccount.id;
     List userIDList = [myId,otherAccountId];
@@ -72,7 +72,7 @@ class FirestoreRepository{
 
 
 
-  Future<Message>addMessage(String talkRoomId,String content,Account sendAccount) async {
+  Future<Message>addMessage(String talkRoomId,String content,Account sendAccount) async {//メッセージを追加するメソッド
 
     final newDoc =  _fireStoreInstance.collection("talk_room").doc(talkRoomId).collection("message").doc().id;
     Message newMessage = Message(
@@ -86,7 +86,7 @@ class FirestoreRepository{
 
 
 
-  Future<String>createTalkRoom(Account myAccount,Account otherAccount) async {
+  Future<String>createTalkRoom(Account myAccount,Account otherAccount) async {//トークルームを作成するメソッド
     List<String> userList = [myAccount.id,otherAccount.id];
     userList.sort((a, b) => a.compareTo(b));//ソートしてidの順番を決めておく
     final newDoc = _fireStoreInstance.collection("talk_room").doc().id;
@@ -111,5 +111,37 @@ class FirestoreRepository{
       }).toList();
     });
     return stream;
+  }
+  
+  
+  
+  Stream<List<TalkRoom>> fetchMyTalkRoomList(String myId){
+    final Stream<QuerySnapshot> talkRoomStream = _fireStoreInstance.collection("talk_room").where("userIDs",arrayContains: myId).snapshots();
+    Stream<List<TalkRoom>> stream = talkRoomStream.map((QuerySnapshot snapshot){
+      return snapshot.docs.map((DocumentSnapshot document){
+        Map<String,dynamic> data = document.data() as Map<String,dynamic>;
+        TalkRoom talkRoom = TalkRoom.fromJson(data);
+        return talkRoom;
+      }).toList();
+    });
+    return stream;
+  }
+  
+  
+  Future<List<Account>> fetchOtherAccount(List<TalkRoom> messageList,String myId)async{
+    var otherAccountId = "";
+    final List<Account> accountList = [];
+    for(final message in messageList){
+      for(final id in message.userIDs){
+        if(id != myId){
+          otherAccountId = id;
+        }
+      }
+      final documentSnapshot = await _fireStoreInstance.collection("users").doc(otherAccountId).get();
+      Map<String,dynamic> data = documentSnapshot.data() as Map<String,dynamic>;
+      final Account account = Account.fromJson(data);
+      accountList.add(account);
+    }
+    return accountList;
   }
 }

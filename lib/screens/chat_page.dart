@@ -2,6 +2,7 @@ import 'package:bubble/bubble.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:intl/intl.dart'as intl;
+import 'package:sandbox_level1/Firebase/firestore_repository.dart';
 import 'package:sandbox_level1/model/account.dart';
 import 'package:sandbox_level1/view_model/chat_page_controller.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
@@ -52,7 +53,7 @@ class ChatPage extends HookConsumerWidget{
     final chatPageState = ref.watch(chatPageStateProvider);
     useEffect((){
       final controller = ref.read(chatPageStateProvider.notifier);
-      controller.getTalkRoomInfo(otherAccount);//トークルームidとメッセージリストをとってくる
+      controller.getTalkRoomInfo(myAccount,otherAccount);//トークルームidとメッセージリストをとってくる
       return null;
     },const []);
 
@@ -129,10 +130,6 @@ class ChatPage extends HookConsumerWidget{
                       IconButton(
                           onPressed: () async {
                             final controller = ref.read(chatPageStateProvider.notifier);
-
-                            if(chatPageState.chatRoomId == null){//トークルームが存在しないときトークルームを作る
-                              await controller.createChatRoom(myAccount, otherAccount);
-                            }
 
                             await controller.addMessage(myAccount);//メッセージ追加
                             controller.clearAddMessageFiled();//メッセージ追加できたらtextFieldを初期化
