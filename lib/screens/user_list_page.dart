@@ -101,7 +101,7 @@ class UserListPage extends HookConsumerWidget {
                         onTap: (){
                           Navigator.push(
                               context,
-                              MaterialPageRoute(builder: (context) => ChatPage(myAccount: state.myAccount!,otherAccount: state.allUserList[index],),
+                              MaterialPageRoute(builder: (context) => ChatPage(myAccount: state.myAccount!,otherAccount: state.allUserList[index],talkRoom: null),
                               )
                           );
                         },

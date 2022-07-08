@@ -19,9 +19,10 @@ mixin _$ChatPageState {
   List<Message> get messageList => throw _privateConstructorUsedError;
   TextEditingController get newMessageController =>
       throw _privateConstructorUsedError;
-  String? get chatRoomId => throw _privateConstructorUsedError;
+  String? get talkRoomId => throw _privateConstructorUsedError;
   StreamSubscription<List<Message>>? get messageListener =>
       throw _privateConstructorUsedError;
+  TalkRoom? get talkRoom => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
   $ChatPageStateCopyWith<ChatPageState> get copyWith =>
@@ -36,8 +37,11 @@ abstract class $ChatPageStateCopyWith<$Res> {
   $Res call(
       {List<Message> messageList,
       TextEditingController newMessageController,
-      String? chatRoomId,
-      StreamSubscription<List<Message>>? messageListener});
+      String? talkRoomId,
+      StreamSubscription<List<Message>>? messageListener,
+      TalkRoom? talkRoom});
+
+  $TalkRoomCopyWith<$Res>? get talkRoom;
 }
 
 /// @nodoc
@@ -53,8 +57,9 @@ class _$ChatPageStateCopyWithImpl<$Res>
   $Res call({
     Object? messageList = freezed,
     Object? newMessageController = freezed,
-    Object? chatRoomId = freezed,
+    Object? talkRoomId = freezed,
     Object? messageListener = freezed,
+    Object? talkRoom = freezed,
   }) {
     return _then(_value.copyWith(
       messageList: messageList == freezed
@@ -65,15 +70,30 @@ class _$ChatPageStateCopyWithImpl<$Res>
           ? _value.newMessageController
           : newMessageController // ignore: cast_nullable_to_non_nullable
               as TextEditingController,
-      chatRoomId: chatRoomId == freezed
-          ? _value.chatRoomId
-          : chatRoomId // ignore: cast_nullable_to_non_nullable
+      talkRoomId: talkRoomId == freezed
+          ? _value.talkRoomId
+          : talkRoomId // ignore: cast_nullable_to_non_nullable
               as String?,
       messageListener: messageListener == freezed
           ? _value.messageListener
           : messageListener // ignore: cast_nullable_to_non_nullable
               as StreamSubscription<List<Message>>?,
+      talkRoom: talkRoom == freezed
+          ? _value.talkRoom
+          : talkRoom // ignore: cast_nullable_to_non_nullable
+              as TalkRoom?,
     ));
+  }
+
+  @override
+  $TalkRoomCopyWith<$Res>? get talkRoom {
+    if (_value.talkRoom == null) {
+      return null;
+    }
+
+    return $TalkRoomCopyWith<$Res>(_value.talkRoom!, (value) {
+      return _then(_value.copyWith(talkRoom: value));
+    });
   }
 }
 
@@ -87,8 +107,12 @@ abstract class _$$_ChatPageStateCopyWith<$Res>
   $Res call(
       {List<Message> messageList,
       TextEditingController newMessageController,
-      String? chatRoomId,
-      StreamSubscription<List<Message>>? messageListener});
+      String? talkRoomId,
+      StreamSubscription<List<Message>>? messageListener,
+      TalkRoom? talkRoom});
+
+  @override
+  $TalkRoomCopyWith<$Res>? get talkRoom;
 }
 
 /// @nodoc
@@ -106,8 +130,9 @@ class __$$_ChatPageStateCopyWithImpl<$Res>
   $Res call({
     Object? messageList = freezed,
     Object? newMessageController = freezed,
-    Object? chatRoomId = freezed,
+    Object? talkRoomId = freezed,
     Object? messageListener = freezed,
+    Object? talkRoom = freezed,
   }) {
     return _then(_$_ChatPageState(
       messageList: messageList == freezed
@@ -118,14 +143,18 @@ class __$$_ChatPageStateCopyWithImpl<$Res>
           ? _value.newMessageController
           : newMessageController // ignore: cast_nullable_to_non_nullable
               as TextEditingController,
-      chatRoomId: chatRoomId == freezed
-          ? _value.chatRoomId
-          : chatRoomId // ignore: cast_nullable_to_non_nullable
+      talkRoomId: talkRoomId == freezed
+          ? _value.talkRoomId
+          : talkRoomId // ignore: cast_nullable_to_non_nullable
               as String?,
       messageListener: messageListener == freezed
           ? _value.messageListener
           : messageListener // ignore: cast_nullable_to_non_nullable
               as StreamSubscription<List<Message>>?,
+      talkRoom: talkRoom == freezed
+          ? _value.talkRoom
+          : talkRoom // ignore: cast_nullable_to_non_nullable
+              as TalkRoom?,
     ));
   }
 }
@@ -136,8 +165,9 @@ class _$_ChatPageState with DiagnosticableTreeMixin implements _ChatPageState {
   _$_ChatPageState(
       {final List<Message> messageList = const [],
       required this.newMessageController,
-      this.chatRoomId,
-      this.messageListener})
+      this.talkRoomId,
+      this.messageListener,
+      this.talkRoom})
       : _messageList = messageList;
 
   final List<Message> _messageList;
@@ -151,13 +181,15 @@ class _$_ChatPageState with DiagnosticableTreeMixin implements _ChatPageState {
   @override
   final TextEditingController newMessageController;
   @override
-  final String? chatRoomId;
+  final String? talkRoomId;
   @override
   final StreamSubscription<List<Message>>? messageListener;
+  @override
+  final TalkRoom? talkRoom;
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'ChatPageState(messageList: $messageList, newMessageController: $newMessageController, chatRoomId: $chatRoomId, messageListener: $messageListener)';
+    return 'ChatPageState(messageList: $messageList, newMessageController: $newMessageController, talkRoomId: $talkRoomId, messageListener: $messageListener, talkRoom: $talkRoom)';
   }
 
   @override
@@ -167,8 +199,9 @@ class _$_ChatPageState with DiagnosticableTreeMixin implements _ChatPageState {
       ..add(DiagnosticsProperty('type', 'ChatPageState'))
       ..add(DiagnosticsProperty('messageList', messageList))
       ..add(DiagnosticsProperty('newMessageController', newMessageController))
-      ..add(DiagnosticsProperty('chatRoomId', chatRoomId))
-      ..add(DiagnosticsProperty('messageListener', messageListener));
+      ..add(DiagnosticsProperty('talkRoomId', talkRoomId))
+      ..add(DiagnosticsProperty('messageListener', messageListener))
+      ..add(DiagnosticsProperty('talkRoom', talkRoom));
   }
 
   @override
@@ -181,9 +214,10 @@ class _$_ChatPageState with DiagnosticableTreeMixin implements _ChatPageState {
             const DeepCollectionEquality()
                 .equals(other.newMessageController, newMessageController) &&
             const DeepCollectionEquality()
-                .equals(other.chatRoomId, chatRoomId) &&
+                .equals(other.talkRoomId, talkRoomId) &&
             const DeepCollectionEquality()
-                .equals(other.messageListener, messageListener));
+                .equals(other.messageListener, messageListener) &&
+            const DeepCollectionEquality().equals(other.talkRoom, talkRoom));
   }
 
   @override
@@ -191,8 +225,9 @@ class _$_ChatPageState with DiagnosticableTreeMixin implements _ChatPageState {
       runtimeType,
       const DeepCollectionEquality().hash(_messageList),
       const DeepCollectionEquality().hash(newMessageController),
-      const DeepCollectionEquality().hash(chatRoomId),
-      const DeepCollectionEquality().hash(messageListener));
+      const DeepCollectionEquality().hash(talkRoomId),
+      const DeepCollectionEquality().hash(messageListener),
+      const DeepCollectionEquality().hash(talkRoom));
 
   @JsonKey(ignore: true)
   @override
@@ -202,11 +237,11 @@ class _$_ChatPageState with DiagnosticableTreeMixin implements _ChatPageState {
 
 abstract class _ChatPageState implements ChatPageState {
   factory _ChatPageState(
-          {final List<Message> messageList,
-          required final TextEditingController newMessageController,
-          final String? chatRoomId,
-          final StreamSubscription<List<Message>>? messageListener}) =
-      _$_ChatPageState;
+      {final List<Message> messageList,
+      required final TextEditingController newMessageController,
+      final String? talkRoomId,
+      final StreamSubscription<List<Message>>? messageListener,
+      final TalkRoom? talkRoom}) = _$_ChatPageState;
 
   @override
   List<Message> get messageList => throw _privateConstructorUsedError;
@@ -214,10 +249,12 @@ abstract class _ChatPageState implements ChatPageState {
   TextEditingController get newMessageController =>
       throw _privateConstructorUsedError;
   @override
-  String? get chatRoomId => throw _privateConstructorUsedError;
+  String? get talkRoomId => throw _privateConstructorUsedError;
   @override
   StreamSubscription<List<Message>>? get messageListener =>
       throw _privateConstructorUsedError;
+  @override
+  TalkRoom? get talkRoom => throw _privateConstructorUsedError;
   @override
   @JsonKey(ignore: true)
   _$$_ChatPageStateCopyWith<_$_ChatPageState> get copyWith =>

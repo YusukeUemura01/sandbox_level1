@@ -12,6 +12,9 @@ class TalkRoom with _$TalkRoom {
   factory TalkRoom({
     required String id,
     required List<String> userIDs,
+    required String finalUpdateUserID,//最後に更新したユーザーのID
+    required String finalSendContent,//最後のメッセージ
+    required int unreadMessageCount,//未読数
     @DateTimeTimestampConverter() required DateTime updateTime,
   }) = _TalkRoom;
 

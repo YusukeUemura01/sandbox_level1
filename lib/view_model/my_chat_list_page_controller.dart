@@ -27,8 +27,8 @@ class MyChatListPageController extends StateNotifier<MyChatListPageState>{
   final fireStoreRepo = FirestoreRepository();
 
   void setLoginAccount() async {//自分のアカウントをセットする
-    if(fireStoreRepo.currentLoginAccount != null){//すでに自分のアカウント情報を取得していたら
-      state = state.copyWith(myAccount: fireStoreRepo.currentLoginAccount);
+    if(FirestoreRepository.currentLoginAccount != null){//すでに自分のアカウント情報を取得していたら
+      state = state.copyWith(myAccount: FirestoreRepository.currentLoginAccount);
       return;
     }
     final loginAccount = await fireStoreRepo.fetchAccountData(FirebaseAuth.instance.currentUser!.uid);

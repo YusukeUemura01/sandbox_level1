@@ -6,7 +6,7 @@ import 'package:sandbox_level1/model/talk_room.dart';
 
 class FirestoreRepository{
   final _fireStoreInstance = FirebaseFirestore.instance;
-  Account? currentLoginAccount;
+  static Account? currentLoginAccount;
 
 
 
@@ -93,7 +93,10 @@ class FirestoreRepository{
     TalkRoom newChatroom = TalkRoom(
         id: newDoc,
         userIDs:userList,
-        updateTime: DateTime.now()
+        updateTime: DateTime.now(),
+        finalSendContent: "",
+        finalUpdateUserID: "",
+        unreadMessageCount: 0,
     );
     await _fireStoreInstance.collection("talk_room").doc(newDoc).set(newChatroom.toJson());//talk_roomの方に保存
     return newDoc;//TODO ここまで
@@ -116,7 +119,7 @@ class FirestoreRepository{
   
   
   Stream<List<TalkRoom>> fetchMyTalkRoomList(String myId){
-    final Stream<QuerySnapshot> talkRoomStream = _fireStoreInstance.collection("talk_room").where("userIDs",arrayContains: myId).snapshots();
+    final Stream<QuerySnapshot> talkRoomStream = _fireStoreInstance.collection("talk_room").where("userIDs",arrayContains: myId).where("finalUpdateUserID",isNotEqualTo: "").snapshots();
     Stream<List<TalkRoom>> stream = talkRoomStream.map((QuerySnapshot snapshot){
       return snapshot.docs.map((DocumentSnapshot document){
         Map<String,dynamic> data = document.data() as Map<String,dynamic>;
@@ -128,7 +131,7 @@ class FirestoreRepository{
   }
   
   
-  Future<List<Account>> fetchOtherAccount(List<TalkRoom> messageList,String myId)async{
+  Future<List<Account>> fetchOtherAccount(List<TalkRoom> messageList,String myId) async {
     var otherAccountId = "";
     final List<Account> accountList = [];
     for(final message in messageList){
@@ -143,5 +146,34 @@ class FirestoreRepository{
       accountList.add(account);
     }
     return accountList;
+  }
+
+
+
+  Future<TalkRoom> updateTalkRoom(String myId,String otherId,TalkRoom room,String content) async {
+    var count = 0;
+    if(room.finalUpdateUserID == myId){//最後の更新者が自分の時、未読数を1増やす
+      count = room.unreadMessageCount + 1;
+    }else{
+      count = 1;
+    }
+    final updateTalkRoom = TalkRoom(
+        id: room.id,
+        userIDs: room.userIDs,
+        finalUpdateUserID: myId,
+        finalSendContent: content,
+        unreadMessageCount: count,
+        updateTime: DateTime.now(),
+    );
+    await _fireStoreInstance.collection("talk_room").doc(room.id).update(updateTalkRoom.toJson());
+    return updateTalkRoom;
+  }
+  
+
+
+  Future<TalkRoom> fetchTakRoomInfo(String id) async {
+    final snapshot = await _fireStoreInstance.collection("talk_room").doc(id).get();
+    Map<String,dynamic> data = snapshot.data() as Map<String,dynamic>;
+    return TalkRoom.fromJson(data);
   }
 }

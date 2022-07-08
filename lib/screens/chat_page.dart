@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:intl/intl.dart'as intl;
 import 'package:sandbox_level1/model/account.dart';
+import 'package:sandbox_level1/model/talk_room.dart';
 import 'package:sandbox_level1/view_model/chat_page_controller.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 
@@ -45,14 +46,15 @@ const styleMe = BubbleStyle(
 class ChatPage extends HookConsumerWidget{
   final Account myAccount;
   final Account otherAccount;
-  const ChatPage({Key? key,required this.myAccount,required this.otherAccount}) : super(key: key);
+  final TalkRoom? talkRoom;//ユーザ一覧ページからの遷移のときはnull
+  const ChatPage({Key? key,required this.myAccount,required this.otherAccount,required this.talkRoom}) : super(key: key);
 
   @override
   Widget build(BuildContext context,WidgetRef ref) {
     final chatPageState = ref.watch(chatPageStateProvider);
     useEffect((){
       final controller = ref.read(chatPageStateProvider.notifier);
-      controller.getTalkRoomInfo(myAccount,otherAccount);//トークルームidとメッセージリストをとってくる
+      controller.getTalkRoomInfo(myAccount,otherAccount,talkRoom);//トークルームidとルーム情報とメッセージリストをとってくる
       return null;
     },const []);
 
@@ -131,6 +133,7 @@ class ChatPage extends HookConsumerWidget{
                             final controller = ref.read(chatPageStateProvider.notifier);
 
                             await controller.addMessage(myAccount);//メッセージ追加
+                            await controller.updateTalkRoomInfo(myAccount, otherAccount);
                             controller.clearAddMessageFiled();//メッセージ追加できたらtextFieldを初期化
                           },
                           icon: const Icon(Icons.send),

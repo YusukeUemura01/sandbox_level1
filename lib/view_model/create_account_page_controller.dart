@@ -103,14 +103,14 @@ class CreateAccountPageStateController extends StateNotifier<CreateAccountPageSt
 
 
   Future<FirebaseException?>setAccountData() async {
-    final _newAccount = Account(
+    final newAccount = Account(
         id: state.newUserCredential!.user!.uid,
         userName: state.nameController.text,
         imagePath: state.imagePath,
         updateTime: DateTime.now()
     );
-    final _setAccountDataException = await FirestoreRepository().setAccountData(_newAccount);//firestoreに保存
-    FirestoreRepository().setCurrentLoginAccount(_newAccount);//FirestoreRepositoryに保存
+    final _setAccountDataException = await FirestoreRepository().setAccountData(newAccount);//firestoreに保存
+    FirestoreRepository().setCurrentLoginAccount(newAccount);//FirestoreRepositoryに保存
     return _setAccountDataException;
   }
 }

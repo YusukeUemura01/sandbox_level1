@@ -22,6 +22,10 @@ TalkRoom _$TalkRoomFromJson(Map<String, dynamic> json) {
 mixin _$TalkRoom {
   String get id => throw _privateConstructorUsedError;
   List<String> get userIDs => throw _privateConstructorUsedError;
+  String get finalUpdateUserID =>
+      throw _privateConstructorUsedError; //最後に更新したユーザーのID
+  String get finalSendContent => throw _privateConstructorUsedError; //最後のメッセージ
+  int get unreadMessageCount => throw _privateConstructorUsedError; //未読数
   @DateTimeTimestampConverter()
   DateTime get updateTime => throw _privateConstructorUsedError;
 
@@ -38,6 +42,9 @@ abstract class $TalkRoomCopyWith<$Res> {
   $Res call(
       {String id,
       List<String> userIDs,
+      String finalUpdateUserID,
+      String finalSendContent,
+      int unreadMessageCount,
       @DateTimeTimestampConverter() DateTime updateTime});
 }
 
@@ -53,6 +60,9 @@ class _$TalkRoomCopyWithImpl<$Res> implements $TalkRoomCopyWith<$Res> {
   $Res call({
     Object? id = freezed,
     Object? userIDs = freezed,
+    Object? finalUpdateUserID = freezed,
+    Object? finalSendContent = freezed,
+    Object? unreadMessageCount = freezed,
     Object? updateTime = freezed,
   }) {
     return _then(_value.copyWith(
@@ -64,6 +74,18 @@ class _$TalkRoomCopyWithImpl<$Res> implements $TalkRoomCopyWith<$Res> {
           ? _value.userIDs
           : userIDs // ignore: cast_nullable_to_non_nullable
               as List<String>,
+      finalUpdateUserID: finalUpdateUserID == freezed
+          ? _value.finalUpdateUserID
+          : finalUpdateUserID // ignore: cast_nullable_to_non_nullable
+              as String,
+      finalSendContent: finalSendContent == freezed
+          ? _value.finalSendContent
+          : finalSendContent // ignore: cast_nullable_to_non_nullable
+              as String,
+      unreadMessageCount: unreadMessageCount == freezed
+          ? _value.unreadMessageCount
+          : unreadMessageCount // ignore: cast_nullable_to_non_nullable
+              as int,
       updateTime: updateTime == freezed
           ? _value.updateTime
           : updateTime // ignore: cast_nullable_to_non_nullable
@@ -81,6 +103,9 @@ abstract class _$$_TalkRoomCopyWith<$Res> implements $TalkRoomCopyWith<$Res> {
   $Res call(
       {String id,
       List<String> userIDs,
+      String finalUpdateUserID,
+      String finalSendContent,
+      int unreadMessageCount,
       @DateTimeTimestampConverter() DateTime updateTime});
 }
 
@@ -98,6 +123,9 @@ class __$$_TalkRoomCopyWithImpl<$Res> extends _$TalkRoomCopyWithImpl<$Res>
   $Res call({
     Object? id = freezed,
     Object? userIDs = freezed,
+    Object? finalUpdateUserID = freezed,
+    Object? finalSendContent = freezed,
+    Object? unreadMessageCount = freezed,
     Object? updateTime = freezed,
   }) {
     return _then(_$_TalkRoom(
@@ -109,6 +137,18 @@ class __$$_TalkRoomCopyWithImpl<$Res> extends _$TalkRoomCopyWithImpl<$Res>
           ? _value._userIDs
           : userIDs // ignore: cast_nullable_to_non_nullable
               as List<String>,
+      finalUpdateUserID: finalUpdateUserID == freezed
+          ? _value.finalUpdateUserID
+          : finalUpdateUserID // ignore: cast_nullable_to_non_nullable
+              as String,
+      finalSendContent: finalSendContent == freezed
+          ? _value.finalSendContent
+          : finalSendContent // ignore: cast_nullable_to_non_nullable
+              as String,
+      unreadMessageCount: unreadMessageCount == freezed
+          ? _value.unreadMessageCount
+          : unreadMessageCount // ignore: cast_nullable_to_non_nullable
+              as int,
       updateTime: updateTime == freezed
           ? _value.updateTime
           : updateTime // ignore: cast_nullable_to_non_nullable
@@ -123,6 +163,9 @@ class _$_TalkRoom with DiagnosticableTreeMixin implements _TalkRoom {
   _$_TalkRoom(
       {required this.id,
       required final List<String> userIDs,
+      required this.finalUpdateUserID,
+      required this.finalSendContent,
+      required this.unreadMessageCount,
       @DateTimeTimestampConverter() required this.updateTime})
       : _userIDs = userIDs;
 
@@ -139,12 +182,21 @@ class _$_TalkRoom with DiagnosticableTreeMixin implements _TalkRoom {
   }
 
   @override
+  final String finalUpdateUserID;
+//最後に更新したユーザーのID
+  @override
+  final String finalSendContent;
+//最後のメッセージ
+  @override
+  final int unreadMessageCount;
+//未読数
+  @override
   @DateTimeTimestampConverter()
   final DateTime updateTime;
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'TalkRoom(id: $id, userIDs: $userIDs, updateTime: $updateTime)';
+    return 'TalkRoom(id: $id, userIDs: $userIDs, finalUpdateUserID: $finalUpdateUserID, finalSendContent: $finalSendContent, unreadMessageCount: $unreadMessageCount, updateTime: $updateTime)';
   }
 
   @override
@@ -154,6 +206,9 @@ class _$_TalkRoom with DiagnosticableTreeMixin implements _TalkRoom {
       ..add(DiagnosticsProperty('type', 'TalkRoom'))
       ..add(DiagnosticsProperty('id', id))
       ..add(DiagnosticsProperty('userIDs', userIDs))
+      ..add(DiagnosticsProperty('finalUpdateUserID', finalUpdateUserID))
+      ..add(DiagnosticsProperty('finalSendContent', finalSendContent))
+      ..add(DiagnosticsProperty('unreadMessageCount', unreadMessageCount))
       ..add(DiagnosticsProperty('updateTime', updateTime));
   }
 
@@ -165,6 +220,12 @@ class _$_TalkRoom with DiagnosticableTreeMixin implements _TalkRoom {
             const DeepCollectionEquality().equals(other.id, id) &&
             const DeepCollectionEquality().equals(other._userIDs, _userIDs) &&
             const DeepCollectionEquality()
+                .equals(other.finalUpdateUserID, finalUpdateUserID) &&
+            const DeepCollectionEquality()
+                .equals(other.finalSendContent, finalSendContent) &&
+            const DeepCollectionEquality()
+                .equals(other.unreadMessageCount, unreadMessageCount) &&
+            const DeepCollectionEquality()
                 .equals(other.updateTime, updateTime));
   }
 
@@ -174,6 +235,9 @@ class _$_TalkRoom with DiagnosticableTreeMixin implements _TalkRoom {
       runtimeType,
       const DeepCollectionEquality().hash(id),
       const DeepCollectionEquality().hash(_userIDs),
+      const DeepCollectionEquality().hash(finalUpdateUserID),
+      const DeepCollectionEquality().hash(finalSendContent),
+      const DeepCollectionEquality().hash(unreadMessageCount),
       const DeepCollectionEquality().hash(updateTime));
 
   @JsonKey(ignore: true)
@@ -191,6 +255,9 @@ abstract class _TalkRoom implements TalkRoom {
   factory _TalkRoom(
           {required final String id,
           required final List<String> userIDs,
+          required final String finalUpdateUserID,
+          required final String finalSendContent,
+          required final int unreadMessageCount,
           @DateTimeTimestampConverter() required final DateTime updateTime}) =
       _$_TalkRoom;
 
@@ -201,6 +268,12 @@ abstract class _TalkRoom implements TalkRoom {
   @override
   List<String> get userIDs => throw _privateConstructorUsedError;
   @override
+  String get finalUpdateUserID => throw _privateConstructorUsedError;
+  @override //最後に更新したユーザーのID
+  String get finalSendContent => throw _privateConstructorUsedError;
+  @override //最後のメッセージ
+  int get unreadMessageCount => throw _privateConstructorUsedError;
+  @override //未読数
   @DateTimeTimestampConverter()
   DateTime get updateTime => throw _privateConstructorUsedError;
   @override

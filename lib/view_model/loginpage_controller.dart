@@ -78,9 +78,9 @@ class LoginPageStateController extends StateNotifier<LoginPageState>{
     if(state.loginUserCredential == null){
       return FirebaseException(plugin: "SingInされていません");
     }
-    final _loginAccount = await FirestoreRepository().fetchAccountData(state.loginUserCredential!.user!.uid);
-    state = state.copyWith(loginAccount: _loginAccount);
-    FirestoreRepository().setCurrentLoginAccount(_loginAccount);
+    final loginAccount = await FirestoreRepository().fetchAccountData(state.loginUserCredential!.user!.uid);
+    state = state.copyWith(loginAccount: loginAccount);
+    FirestoreRepository().setCurrentLoginAccount(loginAccount);
     return null;
   }
 }
