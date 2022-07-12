@@ -42,6 +42,7 @@ class MyChatListPageController extends StateNotifier<MyChatListPageState>{
   void fetchMessageList(){
     final Stream<List<TalkRoom>> stream = fireStoreRepo.fetchMyTalkRoomList(FirebaseAuth.instance.currentUser!.uid);//メッセージをとってくる
     stream.listen((talkRoomList) async {
+      talkRoomList.sort((a,b) => b.updateTime.compareTo(a.updateTime));
       final accountList = await fireStoreRepo.fetchOtherAccount(talkRoomList, FirebaseAuth.instance.currentUser!.uid);
       state = state.copyWith(talkRoomList: talkRoomList,otherAccountList: accountList);
     });

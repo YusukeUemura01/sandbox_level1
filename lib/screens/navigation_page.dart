@@ -29,6 +29,8 @@ class NavigationPage extends HookConsumerWidget {
       body: pageList[state.bottomNavigationIndex],
       bottomNavigationBar: BottomNavigationBar(
           currentIndex: state.bottomNavigationIndex,
+          selectedItemColor: const Color.fromARGB(255, 255, 45, 136),
+          backgroundColor: Theme.of(context).scaffoldBackgroundColor,
           onTap: (value){
             final controller = ref.read(navigationPageProvider.notifier);
             controller.changeBottomNavigationIndex(value);

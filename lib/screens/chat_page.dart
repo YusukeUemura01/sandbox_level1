@@ -21,8 +21,8 @@ final chatPageStateProvider = StateNotifierProvider<
 
 const styleSomebody = BubbleStyle(
   nip: BubbleNip.rightBottom,
-  color: Color.fromARGB(255, 225, 255, 199),
-  borderColor: Colors.blue,
+  color: Color.fromARGB(255, 255, 45, 136),//Color.fromARGB(255, 225, 255, 199),
+  borderColor: null,
   borderWidth: 1,
   elevation: 4,
   margin: BubbleEdges.only(top: 8, right: 10),
@@ -32,8 +32,8 @@ const styleSomebody = BubbleStyle(
 
 const styleMe = BubbleStyle(
   nip: BubbleNip.leftBottom,
-  color: Colors.white,
-  borderColor: Colors.blue,
+  color: Color.fromARGB(255, 83, 78, 230),
+  borderColor: null,
   borderWidth: 1,
   elevation: 4,
   margin: BubbleEdges.only(top: 8, left: 10),
@@ -59,7 +59,10 @@ class ChatPage extends HookConsumerWidget{
     },const []);
 
     return Scaffold(
+      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       appBar: AppBar(
+        elevation: 0,
+        backgroundColor: Theme.of(context).scaffoldBackgroundColor,
         title: Text(otherAccount.userName),
         leading: IconButton(
           icon: const Icon(Icons.arrow_back),
@@ -94,7 +97,12 @@ class ChatPage extends HookConsumerWidget{
                           ),
                           Bubble(
                             child: Container(
-                                child: Text(chatPageState.messageList[index].content),
+                                child: Text(
+                                  chatPageState.messageList[index].content,
+                                  style: const TextStyle(
+                                      color: Colors.white
+                                  ),
+                                ),
                                 constraints: BoxConstraints(maxWidth: MediaQuery.of(context).size.width*0.5),
                             ),
                             style: chatPageState.messageList[index].sendAccountID == myAccount.id ? styleMe : styleSomebody

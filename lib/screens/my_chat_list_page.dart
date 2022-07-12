@@ -30,7 +30,11 @@ class MyChatListPage extends HookConsumerWidget {
 
     },const []);
     return Scaffold(
-      appBar: AppBar(),
+      appBar: AppBar(
+        elevation: 0,
+        title: const Text("チャット"),
+        backgroundColor: Theme.of(context).scaffoldBackgroundColor,
+      ),
       body: SingleChildScrollView(
         child: Column(
           children: [
@@ -58,14 +62,34 @@ class MyChatListPage extends HookConsumerWidget {
                           const SizedBox(
                             width: 20,
                           ),
-                          Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Text(myChatListPageState.otherAccountList[index].userName,style: const TextStyle(fontWeight: FontWeight.bold,fontSize: 15)),
-                              const SizedBox(height: 7,),
-                              Text(myChatListPageState.talkRoomList[index].finalSendContent)
-                            ],
-                          )
+                          SizedBox(
+                            width: MediaQuery.of(context).size.width * 1/2,
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(myChatListPageState.otherAccountList[index].userName,style: const TextStyle(fontWeight: FontWeight.bold,fontSize: 15)),
+                                const SizedBox(height: 7,),
+                                Container(
+                                  constraints: BoxConstraints(maxWidth: MediaQuery.of(context).size.width * 1/2),
+                                  child: Text(
+                                    myChatListPageState.talkRoomList[index].finalSendContent,
+                                    maxLines: 2,
+                                    overflow: TextOverflow.ellipsis,
+                                  ),
+                                )
+                              ],
+                            ),
+                          ),
+                          myChatListPageState.talkRoomList[index].finalUpdateUserID != myChatListPageState.myAccount!.id
+                              ? Padding(
+                                padding: const EdgeInsets.only(left: 10,top: 10),
+                                child: CircleAvatar(
+                                      backgroundColor: const Color.fromARGB(255, 255, 45, 136),
+                                      child: Text(myChatListPageState.talkRoomList[index].unreadMessageCount.toString(),style: const TextStyle(color: Colors.white)),
+                                  ),
+                              )
+                              : const SizedBox(),
                         ],
                       )
                   ),

@@ -23,27 +23,28 @@ class UserListPage extends HookConsumerWidget {
       WidgetsBinding.instance.addPostFrameCallback((_) {
         controller.setLoginAccount();//自分のアカウントをセットする。自分のアカウント情報をfetchしていなければとってくる
       });
-      
+
       if(state.allUserList.isNotEmpty)return;
+
       controller.fetchUserList();//全ユーザーのアカウント情報をとってくる
       return null;
     },const []);
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text("ユーザー"),
+        elevation: 0,
+        backgroundColor: Theme.of(context).scaffoldBackgroundColor,
+        title: Text("ユーザー",style: TextStyle(color: Theme.of(context).textTheme.bodyText2!.color),),
       ),
       body: state.allUserList.isEmpty || state.myAccount == null
         ? const Center(child: CircularProgressIndicator())
-        : SafeArea(
-        child: SingleChildScrollView(
-          physics: const AlwaysScrollableScrollPhysics(),
+        : SingleChildScrollView(
+          physics: const RangeMaintainingScrollPhysics(),
           child: Padding(
             padding: const EdgeInsets.symmetric(vertical: 5,horizontal: 10),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const SizedBox(height: 40),
                 Row(
                   children: [
                     const SizedBox(width: 10),
@@ -112,7 +113,6 @@ class UserListPage extends HookConsumerWidget {
             ),
           ),
         ),
-      ),
 
     );
   }

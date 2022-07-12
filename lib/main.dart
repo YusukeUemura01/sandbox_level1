@@ -26,8 +26,18 @@ class MyApp extends HookConsumerWidget {
   Widget build(BuildContext context,WidgetRef ref) {
     return MaterialApp(
       title: 'Flutter Demo',
+      themeMode: ThemeMode.system,
       theme: ThemeData(
-        primarySwatch: Colors.blue,
+        primaryColor: Colors.blue,
+        primarySwatch: Colors.orange,
+        textTheme: const TextTheme(bodyText2: TextStyle(color: Colors.black)),
+      ),
+      darkTheme: ThemeData(
+        scaffoldBackgroundColor: const Color.fromARGB(255, 31, 28, 57),
+        primaryColor: Colors.blue,
+        brightness: Brightness.dark,
+        primarySwatch: Colors.orange,
+        textTheme: const TextTheme(bodyText2: TextStyle(color: Colors.white)),
       ),
 
       home: StreamBuilder<User?>(

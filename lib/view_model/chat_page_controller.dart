@@ -43,21 +43,16 @@ class ChatPageController extends StateNotifier<ChatPageState>{
       state = state.copyWith(talkRoom: room);
       return;
     }
-    final talkRoom = await fireStoreRepo.fetchTakRoomInfo(id);
+    final talkRoom = await fireStoreRepo.fetchTakRoomInfo(id);//ルーム情報がなければルーム情報を取得
     state = state.copyWith(talkRoom: talkRoom);
   }
 
 
   Future<void>getTalkRoomInfo(Account myAccount,Account otherAccount,TalkRoom? room) async {//トークルームidとメッセージリストを取得してくる
-    final id = await fireStoreRepo.fetchTalkRoomID(otherAccount);//id取得
-    state = state.copyWith(talkRoomId: id);
 
-    if(id == null){//トークルームidが存在しない時、
-      await createTalkRoom(myAccount, otherAccount);//idを新規に取得
-      listenMessageList(state.talkRoomId!);
-      await setTalkRoomInfo(room, state.talkRoomId!);
-      return;
-    }
+    var id = await fireStoreRepo.fetchTalkRoomID(otherAccount);//id取得
+    id ??= await createTalkRoom(myAccount, otherAccount);//ルームがないときルームidを作成
+    state = state.copyWith(talkRoomId: id);
     await setTalkRoomInfo(room, id);//ルーム情報を取ってくる
     await listenMessageList(id);////トークルームidが存在するとき、メッセージ取得
   }
@@ -68,17 +63,20 @@ class ChatPageController extends StateNotifier<ChatPageState>{
   Future<void> listenMessageList(String id) async {//メッセージをリアルタイムで更新
 
     Stream<List<Message>> messageListStream = fireStoreRepo.fetchMessageList(id);
-    final messageListener = messageListStream.listen((messageList) {
+    final messageListener = messageListStream.listen((messageList) async {
       state = state.copyWith(messageList: messageList);
+
+      final talkRoom = await fireStoreRepo.fetchTakRoomInfo(id);//トークルーム情報もアップデートしておく
+      state = state.copyWith(talkRoom: talkRoom);
     });
     state = state.copyWith(messageListener: messageListener);
   }
 
 
 
-  Future<void>createTalkRoom(Account myAccount,Account otherAccount) async {//ルームが存在しない時、ルームを作る
+  Future<String>createTalkRoom(Account myAccount,Account otherAccount) async {//ルームが存在しない時、ルームを作る
     final id = await fireStoreRepo.createTalkRoom(myAccount, otherAccount);
-    state = state.copyWith(talkRoomId: id);
+    return id;
   }
 
 
