@@ -34,9 +34,9 @@ class MyApp extends HookConsumerWidget {
       ),
       darkTheme: ThemeData(
         scaffoldBackgroundColor: const Color.fromARGB(255, 31, 28, 57),
-        primaryColor: Colors.blue,
-        brightness: Brightness.dark,
+        primaryColor: const Color.fromARGB(255, 255, 45, 136),
         primarySwatch: Colors.orange,
+        brightness: Brightness.dark,
         textTheme: const TextTheme(bodyText2: TextStyle(color: Colors.white)),
       ),
 

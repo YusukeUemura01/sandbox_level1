@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:sandbox_level1/screens/my_profile_page.dart';
+import 'package:sandbox_level1/screens/edit_profile_page.dart';
 import 'package:sandbox_level1/screens/my_chat_list_page.dart';
 import 'package:sandbox_level1/screens/user_list_page.dart';
 import 'package:sandbox_level1/view_model/navigation_page_controller.dart';
@@ -18,7 +18,7 @@ class NavigationPage extends HookConsumerWidget {
 
   const NavigationPage({Key? key}) : super(key: key);
 
-  static const List <Widget> pageList = [UserListPage(),MyChatListPage(),MyProfilePage()];
+  static const List <Widget> pageList = [UserListPage(),MyChatListPage(),EditProfilePage()];
 
 
   @override
@@ -29,7 +29,7 @@ class NavigationPage extends HookConsumerWidget {
       body: pageList[state.bottomNavigationIndex],
       bottomNavigationBar: BottomNavigationBar(
           currentIndex: state.bottomNavigationIndex,
-          selectedItemColor: const Color.fromARGB(255, 255, 45, 136),
+          selectedItemColor: Theme.of(context).primaryColor,
           backgroundColor: Theme.of(context).scaffoldBackgroundColor,
           onTap: (value){
             final controller = ref.read(navigationPageProvider.notifier);

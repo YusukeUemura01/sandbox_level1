@@ -90,6 +90,7 @@ class CreateAccountPageStateController extends StateNotifier<CreateAccountPageSt
 
   Future<FirebaseException?>upLoadIconImage() async {
     if(state.iconImage == null)return null;//アイコンが選択されていない時アップロードしない
+
     try{
       final _imagePath = await FunctionUtils().upLoadImage(state.newUserCredential!.user!.uid, state.iconImage!);//iconをアップロード
       state = state.copyWith(imagePath: _imagePath);

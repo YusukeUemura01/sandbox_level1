@@ -176,4 +176,11 @@ class FirestoreRepository{
     Map<String,dynamic> data = snapshot.data() as Map<String,dynamic>;
     return TalkRoom.fromJson(data);
   }
+
+
+  Future<void> updateAccountData(Account account) async {
+    final accountToJson = account.toJson();
+    await _fireStoreInstance.collection("users").doc(account.id).set(accountToJson);
+    setCurrentLoginAccount(account);
+  }
 }
