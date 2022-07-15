@@ -56,6 +56,7 @@ class EditProfilePageController extends StateNotifier<EditProfilePageState>{
 
   Future<void> pickAccountImage() async {
     final pickedFile = await FunctionUtils().getImageGallery();
+    if(pickedFile == null)return;
     state = state.copyWith(newAccountImage: File(pickedFile.path));
   }
 

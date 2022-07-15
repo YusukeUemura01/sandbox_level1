@@ -47,8 +47,8 @@ class FirestoreRepository{
     List<Account> userList = [];
     for(int index = 0;index < snapshot.docs.length;index++){
       final data = snapshot.docs[index].data();
-      Account _account = Account.fromJson(data);
-      userList.add(_account);
+      Account account = Account.fromJson(data);
+      userList.add(account);
     }
     return userList;
   }

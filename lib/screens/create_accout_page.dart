@@ -1,6 +1,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:sandbox_level1/Firebase/firestore_repository.dart';
 import 'package:sandbox_level1/screens/navigation_page.dart';
 import 'package:sandbox_level1/utils/function_utils.dart';
 import 'package:sandbox_level1/view_model/create_account_page_controller.dart';
@@ -21,7 +22,10 @@ class CreateAccountPage extends HookConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final createAccountPageState = ref.watch(createAccountPageProvider);
     return Scaffold(
-      appBar: AppBar(),
+      appBar: AppBar(
+        elevation: 0,
+        backgroundColor: Theme.of(context).scaffoldBackgroundColor,
+      ),
       body: Stack(
         alignment: Alignment.center,
         children: [
@@ -113,15 +117,17 @@ class CreateAccountPage extends HookConsumerWidget {
                         return;
                       }
 
-                      controller.changeIsLoading();
-                      Navigator.of(context).pushReplacement(
-                        MaterialPageRoute(
-                          builder: (context) {
-                            return const NavigationPage();
-                          },
-                        ),
-                      );
-
+                      if(FirestoreRepository.currentLoginAccount != null){
+                        print("セット完了");
+                        controller.changeIsLoading();
+                        Navigator.of(context).pushReplacement(
+                          MaterialPageRoute(
+                            builder: (context) {
+                              return const NavigationPage();
+                            },
+                          ),
+                        );
+                      }
                     },
                     child: const Text("登録"),
                   ),

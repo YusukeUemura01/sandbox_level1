@@ -43,6 +43,8 @@ class CreateAccountPageStateController extends StateNotifier<CreateAccountPageSt
 
   Future<void> getImageAndChangeIconImage() async {
     final pickedFile = await FunctionUtils().getImageGallery();
+    if(pickedFile == null)return;
+
     state = state.copyWith(iconImage: File(pickedFile.path));
   }
 

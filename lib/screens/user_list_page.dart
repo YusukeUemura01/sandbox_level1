@@ -36,7 +36,7 @@ class UserListPage extends HookConsumerWidget {
         backgroundColor: Theme.of(context).scaffoldBackgroundColor,
         title: Text("ユーザー",style: TextStyle(color: Theme.of(context).textTheme.bodyText2!.color),),
       ),
-      body: state.allUserList.isEmpty || state.myAccount == null
+      body: state.myAccount == null
         ? const Center(child: CircularProgressIndicator())
         : SingleChildScrollView(
           physics: const RangeMaintainingScrollPhysics(),
@@ -66,9 +66,11 @@ class UserListPage extends HookConsumerWidget {
                   child: Text("ユーザー 一覧",style: TextStyle(fontWeight: FontWeight.bold),),
                 ),
                 const Divider(color: Colors.blueGrey,),
-                ListView.builder(
-                  shrinkWrap: true,
-                  physics: const NeverScrollableScrollPhysics(),
+                state.allUserList.isEmpty
+                ? const Center(child: Text("ユーザーがまだいません"))
+                : ListView.builder(
+                    shrinkWrap: true,
+                    physics: const NeverScrollableScrollPhysics(),
                     itemCount: state.allUserList.length,
                     itemBuilder: (BuildContext context, int index) {
                       return GestureDetector(

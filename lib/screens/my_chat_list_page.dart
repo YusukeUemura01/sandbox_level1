@@ -35,12 +35,12 @@ class MyChatListPage extends HookConsumerWidget {
         title: const Text("チャット"),
         backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       ),
-      body: myChatListPageState.talkRoomList.isEmpty || myChatListPageState.otherAccountList.isEmpty
-        ? const Center(child: CircularProgressIndicator())
-        : SingleChildScrollView(
+      body: SingleChildScrollView(
         child: Column(
           children: [
-            ListView.builder(
+            myChatListPageState.talkRoomList.isEmpty || myChatListPageState.otherAccountList.isEmpty
+            ? const Center(child: Text("チャットリストがまだありません"))
+            : ListView.builder(
                 shrinkWrap: true,
                 physics: const NeverScrollableScrollPhysics(),
                 itemCount: myChatListPageState.talkRoomList.length,

@@ -60,7 +60,7 @@ class LoginPage extends HookConsumerWidget{
                     ),
                     RichText(
                       text: TextSpan(
-                          style: const TextStyle(color: Colors.black),
+                          style: TextStyle(color: Theme.of(context).textTheme.bodyText2!.color),
                           children: [
                             const TextSpan(text: "アカウントを作成していない方は"),
                             TextSpan(
