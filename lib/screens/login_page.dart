@@ -56,7 +56,7 @@ class LoginPage extends HookConsumerWidget{
                       ),
                     ),
                     const SizedBox(
-                      height: 10,
+                      height: 20,
                     ),
                     RichText(
                       text: TextSpan(
@@ -66,7 +66,7 @@ class LoginPage extends HookConsumerWidget{
                             TextSpan(
                               text: "こちら",
                               recognizer: TapGestureRecognizer()..onTap=(){
-                                Navigator.push(context, MaterialPageRoute(builder: (context) => const CreateAccountPage()));
+                                Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => const CreateAccountPage()));
                               },
                               style: const TextStyle(
                                 color: Colors.blue,
@@ -74,6 +74,9 @@ class LoginPage extends HookConsumerWidget{
                             ),
                           ]
                       ),
+                    ),
+                    const SizedBox(
+                      height: 20,
                     ),
                     ElevatedButton(onPressed: () async {
                       final controller = ref.read(loginPageProvider.notifier);

@@ -1,7 +1,9 @@
 
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:sandbox_level1/Firebase/firestore_repository.dart';
+import 'package:sandbox_level1/screens/login_page.dart';
 import 'package:sandbox_level1/screens/navigation_page.dart';
 import 'package:sandbox_level1/utils/function_utils.dart';
 import 'package:sandbox_level1/view_model/create_account_page_controller.dart';
@@ -81,7 +83,27 @@ class CreateAccountPage extends HookConsumerWidget {
                     ),
                   ),
                   const SizedBox(
-                    height: 50,
+                    height: 20,
+                  ),
+                  RichText(
+                    text: TextSpan(
+                        style: TextStyle(color: Theme.of(context).textTheme.bodyText2!.color),
+                        children: [
+                          const TextSpan(text: "アカウントを作成済みの方は"),
+                          TextSpan(
+                            text: "こちら",
+                            recognizer: TapGestureRecognizer()..onTap=(){
+                              Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => const LoginPage()));
+                            },
+                            style: const TextStyle(
+                              color: Colors.blue,
+                            ),
+                          ),
+                        ]
+                    ),
+                  ),
+                  const SizedBox(
+                    height: 20,
                   ),
                   ElevatedButton(
                     onPressed: () async {
@@ -118,7 +140,6 @@ class CreateAccountPage extends HookConsumerWidget {
                       }
 
                       if(FirestoreRepository.currentLoginAccount != null){
-                        print("セット完了");
                         controller.changeIsLoading();
                         Navigator.of(context).pushReplacement(
                           MaterialPageRoute(

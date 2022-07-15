@@ -32,11 +32,9 @@ class UserListPageStateController extends StateNotifier<UserListPageState>{
 
   void setLoginAccount() async {
     if(FirestoreRepository.currentLoginAccount != null){//すでに自分のアカウント情報を取得していたら
-      print("nullではない");
       state = state.copyWith(myAccount: FirestoreRepository.currentLoginAccount);
       return;
     }
-    print("nullなので取得");
     final loginAccount = await fireStoreRepo.fetchAccountData(FirebaseAuth.instance.currentUser!.uid);
     fireStoreRepo.setCurrentLoginAccount(loginAccount);
     state = state.copyWith(myAccount: loginAccount);
